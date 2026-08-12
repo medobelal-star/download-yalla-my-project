@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EG.M.Belal | منصة تحميل البرامج</title>
+  <meta name="description" content="المنصة الرسمية لتحميل برامج EG.M.Belal. برامج أصلية مع تحديثات مستمرة وميزات متقدمة.">
+  <link rel="canonical" href="https://egmbelal.com/">
+
+  <style>
+    :root {
+      --bg:#0d1117; --card:#161b22; --border:#30363d;
+      --accent:#00f2fe; --accent2:#4facfe;
+      --text:#f0f6fc; --text2:#8b949e;
+      --gradient:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+    }
+    body { font-family:"Segoe UI",Arial; background:var(--bg); color:var(--text); margin:0; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:20px 8%; border-bottom:1px solid var(--border); background:rgba(13,17,23,0.85); backdrop-filter:blur(12px); position:sticky; top:0; z-index:100; }
+    .logo { font-size:24px; font-weight:800; }
+    .logo span { color:var(--accent); text-shadow:0 0 10px var(--accent); }
+    nav a, .admin-trigger { color:var(--text2); text-decoration:none; margin-right:20px; font-weight:600; cursor:pointer; transition:color .3s; }
+    nav a:hover, .admin-trigger:hover { color:var(--accent); }
+    .container { max-width:1200px; margin:auto; padding:40px 20px; }
+    .hero { text-align:center; padding:60px 0; }
+    .hero h1 span { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .btn-download { display:inline-block; background:var(--gradient); color:#000; font-weight:700; padding:15px 25px; border-radius:10px; text-decoration:none; margin-top:20px; transition:.3s; }
+    .btn-download:hover { transform:translateY(-3px); box-shadow:0 8px 35px var(--accent); }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin-top:40px; }
+    .project-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:.3s; }
+    .project-card:hover { border-color:var(--accent); transform:translateY(-5px); }
+    .screenshot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:25px; margin-top:30px; }
+    .screenshot-box { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#1f242c; }
+    .screenshot-box img { width:100%; display:block; }
+    .screenshot-box p { padding:10px; text-align:center; color:var(--text2); }
+    footer { text-align:center; padding:40px; border-top:1px solid var(--border); color:var(--text2); background:#090d13; margin-top:80px; }
+    .contact { margin-top:40px; text-align:center; }
+    .contact p { margin:5px 0; }
+    /* لوحة التحكم */
+    .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:999; }
+    .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:500px; box-shadow:0 0 50px rgba(0,242,254,0.4); }
+    .admin-panel h2 { margin-top:0; color:var(--accent); }
+    .admin-panel label { display:block; margin-top:15px; font-weight:600; color:var(--text2); }
+    .admin-panel input, .admin-panel textarea { width:100%; padding:10px; background:#0d1117; border:1px solid var(--border); border-radius:6px; color:#fff; margin-top:5px; }
+    .admin-btn { background:var(--gradient); color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; width:100%; margin-top:20px; cursor:pointer; }
+    /* صفحة التحميل الموحدة */
+    .download-box { text-align:center; margin-top:50px; }
+    .countdown { font-size:2rem; color:var(--accent); margin:20px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">EG.M.<span>Belal</span></div>
+    <nav>
+      <a href="#">الرئيسية</a>
+      <a href="#programs">البرامج</a>
+      <a href="#contact">تواصل</a>
+      <span class="admin-trigger" onclick="openAdmin()">🔐 لوحة التحكم</span>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <h1 id="hero-title">تحميل برنامج <span>Download Yalla</span></h1>
+      <p id="hero-desc">مدير تنزيلات متطور بخيوط معالجة متعددة وسرعة فائقة.</p>
+      <a href="downloads/download-yalla-v3.zip" download class="btn-download">📥 تحميل Download Yalla</a>
+      <p>Windows 10/11 • 64-bit | الإصدار 3.0.0 | الحجم: 25 MB</p>
+      <p style="color:#58a6ff;">آخر تحديث: أغسطس 2026</p>
+      <p><strong>SHA-256:</strong> <span id="hash-text">0DB802393295075D6D5774F7B076F50C8DEFF4B1C9A8FC1E15005A4A7B5DA9A7</span></p>
+    </section>
+
+    <section id="programs">
+      <h2 style="text-align:center;">برامج أخرى</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3 id="prog1-title">برنامج X-Tool</h3>
+          <p id="prog1-desc">أداة قوية لإدارة الملفات.</p>
+          <a href="downloads/x-tool.zip" download class="btn-download">تحميل</a>
+        </div>
+        <div class="project-card">
+          <h3 id="prog2-title">برنامج MediaFix</h3>
+          <p id="prog2-desc">إصلاح وتشغيل الوسائط بجودة عالية.</p>
+          <a href="#" onclick="openDownload('downloads/mediafix.zip')" class="btn-download">تحميل</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="screenshots">
+      <h2 style="text-align:center;">📸 لقطات شاشة</h2>
+      <div class="screenshot-grid">
+        <div class="screenshot-box">
+          <img id="img1" src="https://via.placeholder.com/600x400" alt="واجهة البرنامج">
+          <p id="img1-desc">الواجهة الرئيسية</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>📞 تواصل معي</h2>
+      <p>المطور: EG.M.Belal (Medo)</p>
+      <p>الهاتف: <a href="tel:01555547106">01555547106</a></p>
+      <p>البريد: <a href="mailto:mohamedbelal.2604@gmail.com">mohamedbelal.2604@gmail.com</a></p>
+    </section>
+  </div>
+  <!-- لوحة التحكم -->
+  <div class="overlay" onclick="closeAdmin()"></div>
+  <div class="admin-panel" id="adminPanel">
+    <h2>لوحة إدارة الموقع ⚡</h2>
+    <div id="loginForm">
+      <label>اسم المستخدم:</label>
+      <input type="text" id="username">
+      <label>كلمة المرور:</label>
+      <input type="password" id="password">
+      <button class="admin-btn" onclick="login()">دخول</button>
+    </div>
+    <div id="editForm" style="display:none;">
+      <label>تعديل العنوان:</label>
+      <input type="text" id="editTitle">
+      <label>تعديل الوصف:</label>
+      <textarea id="editDesc"></textarea>
+      <label>رابط صورة جديدة:</label>
+      <input type="text" id="editImgUrl">
+      <label>SHA-256 جديد:</label>
+      <input type="text" id="editHash">
+      <label>اسم البرنامج 1:</label>
+      <input type="text" id="editProg1Title">
+      <label>وصف البرنامج 1:</label>
+      <textarea id="editProg1Desc"></textarea>
+      <label>اسم البرنامج 2:</label>
+      <input type="text" id="editProg2Title">
+      <label>وصف البرنامج 2:</label>
+      <textarea id="editProg2Desc"></textarea>
+      <label>رقم الهاتف:</label>
+      <input type="text" id="editPhone">
+      <label>البريد الإلكتروني:</label>
+      <input type="text" id="editEmail">
+      <button class="admin-btn" onclick="saveChanges()">حفظ</button>
+    </div>
+  </div>
+
+  <!-- صفحة التحميل الموحدة -->
+  <div class="overlay" id="downloadOverlay" style="display:none;">
+    <div class="admin-panel" style="max-width:600px;">
+      <h2>📥 جاري تجهيز التحميل</h2>
+      <p>سيبدأ التحميل خلال <span id="countdown">5</span> ثواني...</p>
+      <a id="downloadLink" class="btn-download" href="#">تحميل الآن</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 EG.M.Belal. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script>
+    function openAdmin(){
+      document.querySelector('.overlay').style.display='block';
+      document.getElementById('adminPanel').style.display='block';
+    }
+    function closeAdmin(){
+      document.querySelector('.overlay').style.display='none';
+      document.getElementById('adminPanel').style.display='none';
+    }
+    function login(){
+      const u=document.getElementById('username').value;
+      const p=document.getElementById('password').value;
+      if(u==='medo' && p==='333'){
+        document.getElementById('loginForm').style.display='none';
+        document.getElementById('editForm').style.display='block';
+      } else alert('بيانات الدخول غير صحيحة');
+    }
+    function saveChanges(){
+      localStorage.setItem('title',document.getElementById('editTitle').value);
+      localStorage.setItem('desc',document.getElementById('editDesc').value);
+      localStorage.setItem('img',document.getElementById('editImgUrl').value);
+      localStorage.setItem('hash',document.getElementById('editHash').value);
+      localStorage.setItem('prog1Title',document.getElementById('editProg1Title').value);
+      localStorage.setItem('prog1Desc',document.getElementById('editProg1Desc').value);
+      localStorage.setItem('prog2Title',document.getElementById('editProg2Title').value);
+      localStorage.setItem('prog2Desc',document.getElementById('editProg2Desc').value);
+      localStorage.setItem('phone',document.getElementById('editPhone').value);
+      localStorage.setItem('email',document.getElementById('editEmail').value);
+      alert('تم حفظ التعديلات');
+      location.reload();
+    }
+    window.onload=function(){
+      if(localStorage.getItem('title')) document.getElementById('hero-title').innerHTML=localStorage.getItem('title');
+      if(localStorage.getItem('desc')) document.getElementById('hero-desc').innerText=localStorage.getItem('desc');
+      if(localStorage.getItem('hash')) document.getElementById('hash-text').innerText=localStorage.getItem('hash');
+      if(localStorage.getItem('prog1Title')) document.getElementById('prog1-title').innerText=localStorage.getItem('prog1Title');
+      if(localStorage.getItem('prog1Desc')) document.getElementById('prog1-desc').innerText=localStorage.getItem('prog1Desc');
+      if(localStorage.getItem('prog2Title')) document.getElementById('prog2-title').innerText=localStorage.getItem('prog2Title');
+      if(localStorage.getItem('prog2Desc')) document.getElementById('prog2-desc').innerText=localStorage.getItem('prog2Desc');
+      if(localStorage.getItem('phone')) document.querySelector('#contact a[href^="tel"]').innerText=localStorage.getItem('phone');
+      if(localStorage.getItem('email')) document.querySelector('#contact a[href^="mailto"]').innerText=localStorage.getItem('email');
+    }
+    function openDownload(file){
+      document.getElementById('downloadOverlay').style.display='block';
+      const link=document.getElementById('downloadLink');
+      link.href=file;
+      let counter=5;
+      const cd=document.getElementById('countdown');
+      const timer=setInterval(()=>{
+        counter--;
+        cd.textContent=counter;
+        if(counter===0){
+          clearInterval(timer);
+          window.location.href=link.href;
+        }
+      },1000);
+    }
+  </script>
+</body>
+</html>
