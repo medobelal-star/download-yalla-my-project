@@ -6,7 +6,7 @@
   <title>EG.M.Belal | منصة تحميل البرامج</title>
   <meta name="description" content="المنصة الرسمية لتحميل برامج EG.M.Belal. برامج أصلية مع تحديثات مستمرة وميزات متقدمة.">
   <link rel="canonical" href="https://egmbelal.com/">
-
+<meta name="google-site-verification" content="zVHG1xpmtWTF9Ix6-vK8jmg6lXmnDdKOT4LP2ncG2js" />
   <style>
     :root {
       --bg:#0d1117; --card:#161b22; --border:#30363d;
@@ -28,7 +28,7 @@
     .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin-top:40px; }
     .project-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:.3s; }
     .project-card:hover { border-color:var(--accent); transform:translateY(-5px); }
-    .screenshot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:25px; margin-top:30px; }
+    .screenshot-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin-top:15px; }
     .screenshot-box { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#1f242c; }
     .screenshot-box img { width:100%; display:block; }
     .screenshot-box p { padding:10px; text-align:center; color:var(--text2); }
@@ -37,11 +37,15 @@
     .contact p { margin:5px 0; }
     /* لوحة التحكم */
     .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:999; }
-    .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:500px; box-shadow:0 0 50px rgba(0,242,254,0.4); }
-    .admin-panel h2 { margin-top:0; color:var(--accent); }
-    .admin-panel label { display:block; margin-top:15px; font-weight:600; color:var(--text2); }
+    .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:600px; box-shadow:0 0 50px rgba(0,242,254,0.4); }
+    .admin-panel h2 { margin-top:0; color:var(--accent); text-align:center; }
+    .admin-panel label { display:block; margin-top:10px; font-weight:600; color:var(--text2); }
     .admin-panel input, .admin-panel textarea { width:100%; padding:10px; background:#0d1117; border:1px solid var(--border); border-radius:6px; color:#fff; margin-top:5px; }
-    .admin-btn { background:var(--gradient); color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; width:100%; margin-top:20px; cursor:pointer; }
+    .admin-btn { background:var(--gradient); color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; width:100%; margin-top:15px; cursor:pointer; }
+    .tab-buttons { display:flex; justify-content:space-around; margin-bottom:15px; }
+    .tab-buttons button { flex:1; margin:0 5px; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
     /* صفحة التحميل الموحدة */
     .download-box { text-align:center; margin-top:50px; }
     .countdown { font-size:2rem; color:var(--accent); margin:20px 0; }
@@ -62,7 +66,9 @@
     <section class="hero">
       <h1 id="hero-title">تحميل برنامج <span>Download Yalla</span></h1>
       <p id="hero-desc">مدير تنزيلات متطور بخيوط معالجة متعددة وسرعة فائقة.</p>
-      <a href="downloads/download-yalla-v3.zip" download class="btn-download">📥 تحميل Download Yalla</a>
+      <!-- زر إرسال رسالة للمطورين -->
+      <a href="mailto:mohamedbelal.2604@gmail.com?subject=طلب%20تحميل%20برنامج%20Yalla&body=أريد%20تحميل%20البرنامج%20وإرسال%20الرابط%20المباشر" 
+         class="btn-download">✉️ إرسال رسالة للمطورين</a>
       <p>Windows 10/11 • 64-bit | الإصدار 3.0.0 | الحجم: 25 MB</p>
       <p style="color:#58a6ff;">آخر تحديث: أغسطس 2026</p>
       <p><strong>SHA-256:</strong> <span id="hash-text">0DB802393295075D6D5774F7B076F50C8DEFF4B1C9A8FC1E15005A4A7B5DA9A7</span></p>
@@ -70,26 +76,37 @@
 
     <section id="programs">
       <h2 style="text-align:center;">برامج أخرى</h2>
-      <div class="projects-grid">
+      <div class="projects-grid" id="programsGrid">
         <div class="project-card">
           <h3 id="prog1-title">برنامج X-Tool</h3>
           <p id="prog1-desc">أداة قوية لإدارة الملفات.</p>
-          <a href="downloads/x-tool.zip" download class="btn-download">تحميل</a>
+          <a href="https://www.mediafire.com/file/example/x-tool.zip/file" class="btn-download">تحميل</a>
+          <div class="screenshot-grid">
+            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+          </div>
         </div>
         <div class="project-card">
           <h3 id="prog2-title">برنامج MediaFix</h3>
           <p id="prog2-desc">إصلاح وتشغيل الوسائط بجودة عالية.</p>
-          <a href="#" onclick="openDownload('https://www.mediafire.com/file/ywq33pofpdu5ghl/download-yalla-v3.zip/file')" class="btn-download">📥 تحميل Download Yalla</a>
+          <a href="https://www.mediafire.com/file/ywq33pofpdu5ghl/download-yalla-v3.zip/file" class="btn-download">📥 تحميل</a>
+          <div class="screenshot-grid">
+            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+          </div>
         </div>
       </div>
     </section>
-
     <section class="screenshots">
       <h2 style="text-align:center;">📸 لقطات شاشة</h2>
       <div class="screenshot-grid">
         <div class="screenshot-box">
           <img id="img1" src="https://via.placeholder.com/600x400" alt="واجهة البرنامج">
           <p id="img1-desc">الواجهة الرئيسية</p>
+        </div>
+        <div class="screenshot-box">
+          <img id="img2" src="https://via.placeholder.com/600x400" alt="إعدادات البرنامج">
+          <p id="img2-desc">إعدادات البرنامج</p>
         </div>
       </div>
     </section>
@@ -101,6 +118,7 @@
       <p>البريد: <a href="mailto:mohamedbelal.2604@gmail.com">mohamedbelal.2604@gmail.com</a></p>
     </section>
   </div>
+
   <!-- لوحة التحكم -->
   <div class="overlay" onclick="closeAdmin()"></div>
   <div class="admin-panel" id="adminPanel">
@@ -112,31 +130,56 @@
       <input type="password" id="password">
       <button class="admin-btn" onclick="login()">دخول</button>
     </div>
+
     <div id="editForm" style="display:none;">
-      <label>تعديل العنوان:</label>
-      <input type="text" id="editTitle">
-      <label>تعديل الوصف:</label>
-      <textarea id="editDesc"></textarea>
-      <label>رابط صورة جديدة:</label>
-      <input type="text" id="editImgUrl">
-      <label>SHA-256 جديد:</label>
-      <input type="text" id="editHash">
-      <label>اسم البرنامج 1:</label>
-      <input type="text" id="editProg1Title">
-      <label>وصف البرنامج 1:</label>
-      <textarea id="editProg1Desc"></textarea>
-      <label>اسم البرنامج 2:</label>
-      <input type="text" id="editProg2Title">
-      <label>وصف البرنامج 2:</label>
-      <textarea id="editProg2Desc"></textarea>
-      <label>رقم الهاتف:</label>
-      <input type="text" id="editPhone">
-      <label>البريد الإلكتروني:</label>
-      <input type="text" id="editEmail">
-      <button class="admin-btn" onclick="saveChanges()">حفظ</button>
+      <div class="tab-buttons">
+        <button onclick="openTab('generalTab')">⚙️ عام</button>
+        <button onclick="openTab('programsTab')">📦 البرامج</button>
+        <button onclick="openTab('messagesTab')">📩 الرسائل</button>
+      </div>
+
+      <!-- تبويب عام -->
+      <div id="generalTab" class="tab-content active">
+        <label>تعديل العنوان:</label>
+        <input type="text" id="editTitle">
+        <label>تعديل الوصف:</label>
+        <textarea id="editDesc"></textarea>
+        <label>رابط صورة جديدة:</label>
+        <input type="text" id="editImgUrl">
+        <label>SHA-256 جديد:</label>
+        <input type="text" id="editHash">
+        <label>رقم الهاتف:</label>
+        <input type="text" id="editPhone">
+        <label>البريد الإلكتروني:</label>
+        <input type="text" id="editEmail">
+      </div>
+
+      <!-- تبويب البرامج -->
+      <div id="programsTab" class="tab-content">
+        <h3>إضافة برنامج جديد</h3>
+        <label>اسم البرنامج:</label>
+        <input type="text" id="newProgTitle">
+        <label>وصف البرنامج:</label>
+        <textarea id="newProgDesc"></textarea>
+        <label>رابط التحميل (MediaFire):</label>
+        <input type="text" id="newProgLink">
+        <label>رابط صورة 1:</label>
+        <input type="text" id="newProgImg1">
+        <label>رابط صورة 2:</label>
+        <input type="text" id="newProgImg2">
+        <button class="admin-btn" onclick="addProgram()">➕ إضافة البرنامج</button>
+      </div>
+
+      <!-- تبويب الرسائل -->
+      <div id="messagesTab" class="tab-content">
+        <h3>📩 الرسائل المرسلة</h3>
+        <ul id="messagesList"></ul>
+      </div>
+
+      <button class="admin-btn" onclick="saveChanges()">💾 حفظ</button>
+      <button class="admin-btn" onclick="logout()">🚪 تسجيل خروج</button>
     </div>
   </div>
-
   <!-- صفحة التحميل الموحدة -->
   <div class="overlay" id="downloadOverlay" style="display:none;">
     <div class="admin-panel" style="max-width:600px;">
@@ -167,31 +210,76 @@
         document.getElementById('editForm').style.display='block';
       } else alert('بيانات الدخول غير صحيحة');
     }
+    function logout(){
+      document.getElementById('editForm').style.display='none';
+      document.getElementById('loginForm').style.display='block';
+    }
+    function openTab(tabId){
+      document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
     function saveChanges(){
       localStorage.setItem('title',document.getElementById('editTitle').value);
       localStorage.setItem('desc',document.getElementById('editDesc').value);
       localStorage.setItem('img',document.getElementById('editImgUrl').value);
       localStorage.setItem('hash',document.getElementById('editHash').value);
-      localStorage.setItem('prog1Title',document.getElementById('editProg1Title').value);
-      localStorage.setItem('prog1Desc',document.getElementById('editProg1Desc').value);
-      localStorage.setItem('prog2Title',document.getElementById('editProg2Title').value);
-      localStorage.setItem('prog2Desc',document.getElementById('editProg2Desc').value);
       localStorage.setItem('phone',document.getElementById('editPhone').value);
       localStorage.setItem('email',document.getElementById('editEmail').value);
       alert('تم حفظ التعديلات');
       location.reload();
     }
-    window.onload=function(){
-      if(localStorage.getItem('title')) document.getElementById('hero-title').innerHTML=localStorage.getItem('title');
-      if(localStorage.getItem('desc')) document.getElementById('hero-desc').innerText=localStorage.getItem('desc');
-      if(localStorage.getItem('hash')) document.getElementById('hash-text').innerText=localStorage.getItem('hash');
-      if(localStorage.getItem('prog1Title')) document.getElementById('prog1-title').innerText=localStorage.getItem('prog1Title');
-      if(localStorage.getItem('prog1Desc')) document.getElementById('prog1-desc').innerText=localStorage.getItem('prog1Desc');
-      if(localStorage.getItem('prog2Title')) document.getElementById('prog2-title').innerText=localStorage.getItem('prog2Title');
-      if(localStorage.getItem('prog2Desc')) document.getElementById('prog2-desc').innerText=localStorage.getItem('prog2Desc');
-      if(localStorage.getItem('phone')) document.querySelector('#contact a[href^="tel"]').innerText=localStorage.getItem('phone');
-      if(localStorage.getItem('email')) document.querySelector('#contact a[href^="mailto"]').innerText=localStorage.getItem('email');
+
+    function addProgram(){
+      const title=document.getElementById('newProgTitle').value;
+      const desc=document.getElementById('newProgDesc').value;
+      const link=document.getElementById('newProgLink').value;
+      const img1=document.getElementById('newProgImg1').value;
+      const img2=document.getElementById('newProgImg2').value;
+
+      if(title && link){
+        const grid=document.getElementById('programsGrid');
+        const card=document.createElement('div');
+        card.className='project-card';
+        card.innerHTML=`
+          <h3>${title}</h3>
+          <p>${desc}</p>
+          <a href="${link}" class="btn-download">تحميل</a>
+          <div class="screenshot-grid">
+            <div class="screenshot-box"><img src="${img1||'https://via.placeholder.com/300x200'}"></div>
+            <div class="screenshot-box"><img src="${img2||'https://via.placeholder.com/300x200'}"></div>
+          </div>
+        `;
+        grid.appendChild(card);
+
+        // حفظ البرنامج الجديد في LocalStorage
+        let progs=JSON.parse(localStorage.getItem('programs')||'[]');
+        progs.push({title,desc,link,img1,img2});
+        localStorage.setItem('programs',JSON.stringify(progs));
+        alert('تم إضافة البرنامج بنجاح');
+      } else {
+        alert('من فضلك أدخل اسم البرنامج ورابط التحميل');
+      }
     }
+
+    function showMessages(){
+      document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+      document.getElementById('messagesTab').classList.add('active');
+      const list=document.getElementById('messagesList');
+      list.innerHTML='';
+      const msgs=JSON.parse(localStorage.getItem('messages')||'[]');
+      msgs.forEach(m=>{
+        const li=document.createElement('li');
+        li.textContent=m;
+        list.appendChild(li);
+      });
+    }
+
+    function recordMessage(msg){
+      const msgs=JSON.parse(localStorage.getItem('messages')||'[]');
+      msgs.push(msg);
+      localStorage.setItem('messages',JSON.stringify(msgs));
+    }
+
     function openDownload(file){
       document.getElementById('downloadOverlay').style.display='block';
       const link=document.getElementById('downloadLink');
@@ -206,6 +294,129 @@
           window.location.href=link.href;
         }
       },1000);
+    }
+    window.onload=function(){
+      if(localStorage.getItem('title')) document.getElementById('hero-title').innerHTML=localStorage.getItem('title');
+      if(localStorage.getItem('desc')) document.getElementById('hero-desc').innerText=localStorage.getItem('desc');
+      if(localStorage.getItem('hash')) document.getElementById('hash-text').innerText=localStorage.getItem('hash');
+      if(localStorage.getItem('phone')) document.querySelector('#contact a[href^="tel"]').innerText=localStorage.getItem('phone');
+      if(localStorage.getItem('email')) document.querySelector('#contact a[href^="mailto"]').innerText=localStorage.getItem('email');
+
+      // تحميل البرامج الجديدة من LocalStorage
+      if(localStorage.getItem('programs')){
+        const progs=JSON.parse(localStorage.getItem('programs'));
+        const grid=document.getElementById('programsGrid');
+        progs.forEach(p=>{
+          const card=document.createElement('div');
+          card.className='project-card';
+          card.innerHTML=`
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+            <a href="${p.link}" class="btn-download">تحميل</a>
+            <div class="screenshot-grid">
+              <div class="screenshot-box"><img src="${p.img1||'https://via.placeholder.com/300x200'}"></div>
+              <div class="screenshot-box"><img src="${p.img2||'https://via.placeholder.com/300x200'}"></div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
+  <!-- قسم الأسئلة الشائعة (FAQ) -->
+  <section id="faq" class="container">
+    <h2 style="text-align:center;">❓ الأسئلة الشائعة</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>كيف أقوم بتحميل البرامج؟</h3>
+        <p>اضغط على زر "تحميل" بجانب البرنامج المطلوب، أو زر "إرسال رسالة للمطورين" للحصول على رابط مباشر.</p>
+      </div>
+      <div class="project-card">
+        <h3>هل البرامج آمنة؟</h3>
+        <p>نعم، جميع البرامج أصلية وموقعة برمز التحقق SHA-256 لضمان سلامة الملفات.</p>
+      </div>
+      <div class="project-card">
+        <h3>هل يمكنني إضافة برامج جديدة؟</h3>
+        <p>إذا كنت أدمن، يمكنك الدخول إلى لوحة التحكم واستخدام تبويب "📦 البرامج" لإضافة برامج جديدة مع روابط وصور.</p>
+      </div>
+      <div class="project-card">
+        <h3>كيف أتواصل مع المطور؟</h3>
+        <p>من خلال قسم "📞 تواصل معي" أسفل الصفحة، حيث تجد رقم الهاتف والبريد الإلكتروني.</p>
+      </div>
+    </div>
+  </section>
+  <!-- قسم التحديثات (Changelog) -->
+  <section id="changelog" class="container">
+    <h2 style="text-align:center;">📝 سجل التحديثات</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>الإصدار 3.0.0</h3>
+        <p>إطلاق برنامج Yalla بواجهة جديدة ودعم Windows 10/11.</p>
+        <p>إضافة ميزة التحميل بخيوط متعددة لزيادة السرعة.</p>
+      </div>
+      <div class="project-card">
+        <h3>الإصدار 2.5.0</h3>
+        <p>إصلاح مشاكل في برنامج MediaFix وتحسين جودة تشغيل الوسائط.</p>
+        <p>إضافة دعم لملفات الفيديو عالية الدقة.</p>
+      </div>
+      <div class="project-card">
+        <h3>الإصدار 2.0.0</h3>
+        <p>إطلاق برنامج X-Tool لإدارة الملفات بشكل متقدم.</p>
+        <p>إضافة خاصية البحث السريع داخل الملفات.</p>
+      </div>
+      <div class="project-card">
+        <h3>الإصدار 1.0.0</h3>
+        <p>إطلاق المنصة الرسمية EG.M.Belal لأول مرة.</p>
+        <p>إضافة قسم البرامج وقسم التواصل مع المطور.</p>
+      </div>
+    </div>
+  </section>
+  <!-- قسم التعليقات (Feedback) -->
+  <section id="feedback" class="container">
+    <h2 style="text-align:center;">💬 التعليقات</h2>
+    <form onsubmit="submitFeedback(event)">
+      <label>اكتب تعليقك:</label>
+      <textarea id="feedbackText" style="width:100%;height:100px;"></textarea>
+      <button class="btn-download" type="submit">إرسال التعليق</button>
+    </form>
+    <div class="projects-grid" style="margin-top:20px;">
+      <div class="project-card">
+        <h3>📋 التعليقات السابقة</h3>
+        <ul id="feedbackList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function submitFeedback(e){
+      e.preventDefault();
+      const txt=document.getElementById('feedbackText').value;
+      if(txt){
+        let fb=JSON.parse(localStorage.getItem('feedback')||'[]');
+        fb.push(txt);
+        localStorage.setItem('feedback',JSON.stringify(fb));
+        document.getElementById('feedbackText').value='';
+        loadFeedback();
+        alert('تم إرسال التعليق بنجاح');
+      }
+    }
+
+    function loadFeedback(){
+      const list=document.getElementById('feedbackList');
+      list.innerHTML='';
+      const fb=JSON.parse(localStorage.getItem('feedback')||'[]');
+      fb.forEach(f=>{
+        const li=document.createElement('li');
+        li.textContent=f;
+        list.appendChild(li);
+      });
+    }
+
+    // تحميل التعليقات عند فتح الصفحة
+    window.onload=function(){
+      loadFeedback();
     }
   </script>
 </body>
