@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تنظيف وتنسيق النصوص | EG.M.Belal</title>
+<meta name="description" content="نظف نصك من الفراغات الزائدة، أو حوّل الحروف الإنجليزية لكابيتال أو سمول فوراً.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>🧹 تنظيف <span>وتنسيق النصوص</span></h1>
+  <p class="tool-desc">أدوات سريعة لتنظيف وتحويل النصوص.</p>
+  <div class="card">
+    <textarea id="textArea" placeholder="الصق نصك هنا..." style="min-height:200px;"></textarea>
+    <div class="grid-2" style="margin-top:15px;">
+      <button class="btn btn-secondary" onclick="toUpper()">UPPERCASE</button>
+      <button class="btn btn-secondary" onclick="toLower()">lowercase</button>
+      <button class="btn btn-secondary" onclick="toTitleCase()">Title Case</button>
+      <button class="btn btn-secondary" onclick="removeExtraSpaces()">حذف الفراغات الزائدة</button>
+      <button class="btn btn-secondary" onclick="removeLineBreaks()">حذف فواصل الأسطر</button>
+      <button class="btn btn-secondary" onclick="trimEachLine()">تنظيف كل سطر</button>
+    </div>
+    <button class="btn" onclick="copyToClipboard(document.getElementById('textArea').value, this)" style="width:100%;">📋 نسخ النتيجة</button>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script src="assets/common.js"></script>
+<script>
+const ta = document.getElementById('textArea');
+function toUpper(){ ta.value = ta.value.toUpperCase(); }
+function toLower(){ ta.value = ta.value.toLowerCase(); }
+function toTitleCase(){ ta.value = ta.value.replace(/\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase()); }
+function removeExtraSpaces(){ ta.value = ta.value.replace(/[ \t]+/g, ' ').trim(); }
+function removeLineBreaks(){ ta.value = ta.value.replace(/\n+/g, ' '); }
+function trimEachLine(){ ta.value = ta.value.split('\n').map(l => l.trim()).filter(l => l).join('\n'); }
+</script>
+</body>
+</html>
