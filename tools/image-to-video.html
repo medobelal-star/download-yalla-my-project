@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحويل صورة ثابتة إلى فيديو متحرك مجاناً | Photo to Video Converter</title>
+<meta name="description" content="حوّل أي صورة ثابتة لفيديو قصير بحركة كاميرا (زوم أو بانوراما)، اختار المدة والسرعة والجودة، ونزّل الفيديو مباشرة، مع خيار تحويله GIF كمان لو حبيت.">
+<meta name="keywords" content="تحويل صورة الى فيديو, photo to video converter, image to video online free, تحريك صورة ثابتة, صورة متحركة فيديو, ken burns effect video, تحويل الصور الى فيديو قصير, صناعة فيديو من صورة, still image to video, animate photo online, تحويل صورة الى mp4, photo animation online free, صورة الى فيديو بدون برنامج, zoom pan photo video, تحويل الصور الى فيديوهات قصيرة, image to mp4 converter, تحريك الصور بالكاميرا, create video from single photo, صورة متحركة فيديو قصير, photo slideshow video maker, تحويل صورة الى فيديو اونلاين مجانا, single image video effect, تحويل الصورة لفيديو تيك توك, image to video no watermark, تأثير اهتزاز الكاميرا, camera shake effect video, تأثير تحويل ابيض واسود لالوان, black and white to color effect, تأثير فينيت للفيديو, cinematic photo effects online">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  :root { --accent:#c026d3; --accent2:#f472b6; }
+  .upload-zone {
+    border:2px dashed var(--border); border-radius:18px; padding:40px 20px; text-align:center;
+    cursor:pointer; transition:.3s; background:linear-gradient(180deg, #17171c, #121216);
+  }
+  .upload-zone:hover, .upload-zone.dragover { border-color:var(--accent); background:rgba(192,38,212,0.06); }
+  .upload-zone .upload-icon { font-size:3rem; margin-bottom:10px; }
+  .upload-zone .upload-title { font-size:1.1rem; font-weight:700; margin-bottom:6px; }
+  .upload-zone .upload-hint { color:var(--text2); font-size:13px; }
+  .quality-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:10px; }
+  .quality-opt, .dur-opt, .effect-opt { text-align:center; padding:10px 4px; border:1px solid var(--border); border-radius:10px; cursor:pointer; font-size:13px; background:#0d1117; }
+  .quality-opt.selected, .dur-opt.selected, .effect-opt.selected { border-color:var(--accent); background:rgba(192,38,212,0.15); color:#fff; font-weight:700; }
+  .dur-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px; }
+  .effect-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+  .progress-wrap { background:#0d1117; border-radius:10px; overflow:hidden; height:14px; margin-top:12px; border:1px solid var(--border); }
+  .progress-bar { height:100%; background:linear-gradient(90deg, var(--accent), var(--accent2)); width:0%; transition:.2s; }
+  .prompt-box { background:#1c1420; border:1px solid var(--accent); border-radius:14px; padding:20px; margin-top:20px; text-align:center; }
+  .prompt-box .btn-row { display:flex; gap:10px; margin-top:14px; }
+  .prompt-box .btn-row button { flex:1; }
+  @media (max-width:600px){
+    .upload-zone { padding:40px 14px; border-radius:20px; }
+    .upload-zone .upload-icon { font-size:3rem; }
+    .upload-zone .upload-title { font-size:1rem; }
+    .quality-grid { grid-template-columns:repeat(3,1fr); gap:6px; }
+    .quality-opt { padding:9px 2px; font-size:12px; }
+    .effect-grid { grid-template-columns:1fr 1fr; gap:8px; }
+    .effect-opt { padding:11px 4px; font-size:11.5px; }
+    .dur-grid { grid-template-columns:1fr; gap:6px; }
+    .prompt-box .btn-row { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>🎥 صورة <span style="background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">إلى فيديو متحرك</span></h1>
+  <p class="tool-desc">حوّل أي صورة ثابتة لفيديو قصير بحركة كاميرا سينمائية.</p>
+
+  <div class="card">
+    <div class="upload-zone" id="dropZone">
+      <div class="upload-icon">🖼️</div>
+      <div class="upload-title">دوس هنا لاختيار صورة</div>
+      <div class="upload-hint">أو اسحبها وارميها هنا</div>
+      <input type="file" id="imageInput" accept="image/*" style="display:none;">
+    </div>
+
+    <div id="editorArea" style="display:none; margin-top:20px;">
+      <img id="previewImg" style="max-width:100%; border-radius:12px; border:1px solid var(--border); display:block; margin:auto;">
+
+      <label>نوع الحركة:</label>
+      <div class="effect-grid" id="effectGrid">
+        <div class="effect-opt selected" data-fx="zoom-in">🔍 زوم للداخل</div>
+        <div class="effect-opt" data-fx="zoom-out">🔎 زوم للخارج</div>
+        <div class="effect-opt" data-fx="pan-right">➡️ بانوراما لليمين</div>
+        <div class="effect-opt" data-fx="pan-left">⬅️ بانوراما لليسار</div>
+        <div class="effect-opt" data-fx="shake">📳 اهتزاز كاميرا خفيف</div>
+        <div class="effect-opt" data-fx="rotate-slight">🔄 دوران خفيف</div>
+        <div class="effect-opt" data-fx="fade-in">🌅 تلاشي دخول</div>
+        <div class="effect-opt" data-fx="zoom-pulse">💓 نبض التكبير</div>
+        <div class="effect-opt" data-fx="bw-to-color">🎨 أبيض وأسود للألوان</div>
+        <div class="effect-opt" data-fx="vignette-pulse">🌗 فينيت نابض</div>
+      </div>
+
+      <label>مدة الفيديو (المدة الأصلية 5 ثواني، اختار أبطأ لو حبيت):</label>
+      <div class="dur-grid" id="durGrid">
+        <div class="dur-opt selected" data-d="5">5 ثواني (أصلي)</div>
+        <div class="dur-opt" data-d="7">7 ثواني (أبطأ)</div>
+        <div class="dur-opt" data-d="10">10 ثواني (أبطأ أكتر)</div>
+      </div>
+
+      <label>جودة الدقة (Resolution):</label>
+      <div class="quality-grid" id="qualityGrid">
+        <div class="quality-opt" data-h="120">120p</div>
+        <div class="quality-opt" data-h="240">240p</div>
+        <div class="quality-opt selected" data-h="360">360p</div>
+        <div class="quality-opt" data-h="480">480p</div>
+        <div class="quality-opt" data-h="720">720p</div>
+      </div>
+
+      <p class="hint" id="frameInfo"></p>
+
+      <button class="btn" id="convertBtn" style="width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2));">🎬 حوّل لفيديو</button>
+
+      <div id="progressArea" style="display:none;">
+        <p class="hint" id="progressText">جاري تسجيل الفيديو...</p>
+        <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+
+      <div id="resultArea" style="display:none; text-align:center; margin-top:20px;">
+        <video id="resultVideo" style="max-width:100%; border-radius:12px; border:1px solid var(--border);" controls muted loop></video>
+        <p class="hint" id="resultInfo"></p>
+        <button class="btn" id="downloadVideoBtn" style="width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2));">⬇ تحميل الفيديو</button>
+
+        <div class="prompt-box" id="gifPrompt">
+          <p>🎞️ تحب تحوّل نفس الفيديو ده لـ GIF كمان؟</p>
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="noGifBtn">لأ، خلاص كده</button>
+            <button class="btn" id="yesGifBtn" style="background:linear-gradient(135deg,var(--accent),var(--accent2));">أيوه، حوّله GIF</button>
+          </div>
+        </div>
+
+        <div id="gifResultArea" style="display:none; margin-top:20px;">
+          <img id="resultGif2" style="max-width:100%; border-radius:12px; border:1px solid var(--border);">
+          <p class="hint" id="gifResultSize"></p>
+          <button class="btn" id="downloadGifBtn" style="width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2));">⬇ تحميل الـ GIF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script src="assets/common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const imageInput = document.getElementById('imageInput');
+let selectedImage = null;
+let selectedHeight = 360;
+let selectedEffect = 'zoom-in';
+let selectedDuration = 5;
+const FPS = 30; // ثابت لضمان فيديو سلس
+
+dropZone.onclick = () => imageInput.click();
+dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('dragover'); };
+dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+dropZone.ondrop = (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); if(e.dataTransfer.files[0]) loadImg(e.dataTransfer.files[0]); };
+imageInput.onchange = (e) => { if(e.target.files[0]) loadImg(e.target.files[0]); };
+
+function loadImg(file){
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    selectedImage = img;
+    document.getElementById('previewImg').src = url;
+    document.getElementById('editorArea').style.display = 'block';
+    updateFrameInfo();
+  };
+  img.src = url;
+}
+
+document.getElementById('effectGrid').onclick = (e) => {
+  const opt = e.target.closest('.effect-opt'); if(!opt) return;
+  document.querySelectorAll('#effectGrid .effect-opt').forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected'); selectedEffect = opt.dataset.fx;
+};
+document.getElementById('durGrid').onclick = (e) => {
+  const opt = e.target.closest('.dur-opt'); if(!opt) return;
+  document.querySelectorAll('#durGrid .dur-opt').forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected'); selectedDuration = parseInt(opt.dataset.d);
+  updateFrameInfo();
+};
+document.getElementById('qualityGrid').onclick = (e) => {
+  const opt = e.target.closest('.quality-opt'); if(!opt) return;
+  document.querySelectorAll('#qualityGrid .quality-opt').forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected'); selectedHeight = parseInt(opt.dataset.h);
+};
+
+function updateFrameInfo(){
+  const frames = Math.min(350, Math.round(selectedDuration * FPS));
+  document.getElementById('frameInfo').textContent = `هيتعمل تقريباً ${frames} فريم حركة على مدار ${selectedDuration} ثواني.`;
+}
+updateFrameInfo();
+
+// دالة موحدة بتحسب كل خصائص الفريم (منطقة القص، الدوران، الشفافية، التدرج الرمادي، الفينيت) لكل تأثير
+function computeFrameParams(img, effect, t){
+  const zoomMin = 1.0, zoomMax = 1.35;
+  let scale = 1.15, offsetXRatio = 0.5, offsetYRatio = 0.5;
+  let rotationDeg = 0, opacity = 1, grayscale = 0, vignetteAlpha = 0;
+
+  if(effect === 'zoom-in'){
+    scale = zoomMin + (zoomMax - zoomMin) * t;
+  } else if(effect === 'zoom-out'){
+    scale = zoomMax - (zoomMax - zoomMin) * t;
+  } else if(effect === 'pan-right' || effect === 'pan-left'){
+    scale = 1.2;
+    offsetXRatio = effect === 'pan-right' ? t : (1 - t);
+  } else if(effect === 'shake'){
+    // اهتزاز كاميرا خفيف ناعم (زي كاميرا محمولة باليد) - حركة عشوائية سلسة بسينات مختلفة الترددات
+    scale = 1.12;
+    offsetXRatio = 0.5 + 0.04 * Math.sin(t * 26) + 0.02 * Math.sin(t * 13);
+    offsetYRatio = 0.5 + 0.03 * Math.cos(t * 19) + 0.02 * Math.sin(t * 31);
+  } else if(effect === 'rotate-slight'){
+    scale = 1.18; // زوم إضافي عشان يغطي الحواف وقت الدوران
+    rotationDeg = 3.5 * Math.sin(t * Math.PI * 1.2);
+  } else if(effect === 'fade-in'){
+    scale = 1.05;
+    opacity = t;
+  } else if(effect === 'zoom-pulse'){
+    // تأثير "نبض" زي التنفس - تكبير وتصغير متكرر بإيقاع هادئ
+    scale = 1.15 + 0.08 * Math.sin(t * Math.PI * 3);
+  } else if(effect === 'bw-to-color'){
+    scale = 1.05;
+    grayscale = 1 - t; // يبدأ أبيض وأسود بالكامل وينتهي بالألوان الطبيعية
+  } else if(effect === 'vignette-pulse'){
+    scale = 1.1;
+    vignetteAlpha = 0.18 + 0.15 * Math.sin(t * Math.PI * 3);
+  }
+
+  const srcW = img.width / scale, srcH = img.height / scale;
+  const maxX = img.width - srcW, maxY = img.height - srcH;
+  return {
+    sx: maxX * offsetXRatio, sy: maxY * offsetYRatio, sw: srcW, sh: srcH,
+    rotationDeg, opacity, grayscale, vignetteAlpha
+  };
+}
+
+// يرسم فريم واحد على الكانفاس مطبق عليه كل خصائص التأثير المطلوب
+function drawFrame(ctx, img, canvasW, canvasH, params){
+  ctx.save();
+  ctx.clearRect(0, 0, canvasW, canvasH);
+  ctx.globalAlpha = params.opacity;
+  ctx.filter = params.grayscale > 0 ? `grayscale(${Math.round(params.grayscale * 100)}%)` : 'none';
+
+  if(params.rotationDeg !== 0){
+    ctx.translate(canvasW / 2, canvasH / 2);
+    ctx.rotate(params.rotationDeg * Math.PI / 180);
+    ctx.translate(-canvasW / 2, -canvasH / 2);
+  }
+
+  ctx.drawImage(img, params.sx, params.sy, params.sw, params.sh, 0, 0, canvasW, canvasH);
+  ctx.filter = 'none';
+  ctx.globalAlpha = 1;
+
+  if(params.vignetteAlpha > 0){
+    const grad = ctx.createRadialGradient(
+      canvasW/2, canvasH/2, canvasH*0.3,
+      canvasW/2, canvasH/2, canvasH*0.75
+    );
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, `rgba(0,0,0,${params.vignetteAlpha})`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvasW, canvasH);
+  }
+  ctx.restore();
+}
+
+function bestMimeType(){
+  const candidates = ['video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+  for(const type of candidates){
+    if(window.MediaRecorder && MediaRecorder.isTypeSupported(type)) return type;
+  }
+  return '';
+}
+
+let lastVideoBlob = null;
+
+document.getElementById('convertBtn').onclick = () => {
+  if(!selectedImage) return;
+  const img = selectedImage;
+  const targetHeight = selectedHeight;
+  const targetWidth = Math.round(targetHeight * (img.width / img.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = targetWidth; canvas.height = targetHeight;
+  const ctx = canvas.getContext('2d');
+
+  const progressArea = document.getElementById('progressArea');
+  const progressBar = document.getElementById('progressBar');
+  progressArea.style.display = 'block';
+  document.getElementById('resultArea').style.display = 'none';
+  document.getElementById('gifResultArea').style.display = 'none';
+  document.getElementById('convertBtn').disabled = true;
+
+  const mimeType = bestMimeType();
+  if(!mimeType){
+    alert('للأسف متصفحك مش بيدعم تسجيل فيديو مباشر. جرب متصفح تاني زي كروم أو سفاري حديث.');
+    document.getElementById('convertBtn').disabled = false;
+    progressArea.style.display = 'none';
+    return;
+  }
+
+  const stream = canvas.captureStream(FPS);
+  const chunks = [];
+  const recorder = new MediaRecorder(stream, { mimeType });
+  recorder.ondataavailable = (e) => { if(e.data.size > 0) chunks.push(e.data); };
+  recorder.onstop = () => {
+    const blob = new Blob(chunks, { type: mimeType });
+    lastVideoBlob = blob;
+    progressArea.style.display = 'none';
+    document.getElementById('convertBtn').disabled = false;
+    const resultArea = document.getElementById('resultArea');
+    resultArea.style.display = 'block';
+    const url = URL.createObjectURL(blob);
+    document.getElementById('resultVideo').src = url;
+    const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
+    document.getElementById('resultInfo').textContent =
+      `تم إنشاء الفيديو بصيغة ${ext.toUpperCase()} (متصفحك بيدعم الصيغة دي) — الحجم: ${Math.round(blob.size/1024)} KB`;
+    document.getElementById('downloadVideoBtn').onclick = () => downloadBlob(blob, `photo-to-video.${ext}`);
+    document.getElementById('gifPrompt').style.display = 'block';
+    document.getElementById('gifResultArea').style.display = 'none';
+  };
+
+  recorder.start();
+  const durationMs = selectedDuration * 1000;
+  const startTime = performance.now();
+
+  function drawLoop(now){
+    const elapsed = now - startTime;
+    const t = Math.min(1, elapsed / durationMs);
+    const r = computeFrameParams(img, selectedEffect, t);
+    drawFrame(ctx, img, targetWidth, targetHeight, r);
+    progressBar.style.width = Math.round(t * 100) + '%';
+    if(elapsed < durationMs){
+      requestAnimationFrame(drawLoop);
+    } else {
+      recorder.stop();
+    }
+  }
+  requestAnimationFrame(drawLoop);
+};
+
+document.getElementById('noGifBtn').onclick = () => {
+  document.getElementById('gifPrompt').style.display = 'none';
+};
+
+document.getElementById('yesGifBtn').onclick = () => {
+  document.getElementById('gifPrompt').style.display = 'none';
+  convertToGifFromSameSettings();
+};
+
+// بيستخدم بالظبط نفس الصورة والحركة والمدة والجودة اللي استخدمها الفيديو، من غير ما يحتاج ينقل ملفات بين صفحات
+async function convertToGifFromSameSettings(){
+  const img = selectedImage;
+  const targetHeight = selectedHeight;
+  const targetWidth = Math.round(targetHeight * (img.width / img.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = targetWidth; canvas.height = targetHeight;
+  const ctx = canvas.getContext('2d');
+
+  const gifFps = 12; // fps أقل مناسب لملف GIF عشان الحجم يفضل معقول
+  const frameCount = Math.round(selectedDuration * gifFps);
+
+  document.getElementById('gifResultArea').style.display = 'block';
+  document.getElementById('gifResultSize').textContent = 'جاري التحويل لـ GIF...';
+
+  const gif = new GIF({
+    workers: 2, quality: 10, width: targetWidth, height: targetHeight, repeat: 0,
+    workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+  });
+
+  for(let i = 0; i < frameCount; i++){
+    const t = frameCount === 1 ? 0 : i / (frameCount - 1);
+    const r = computeFrameParams(img, selectedEffect, t);
+    drawFrame(ctx, img, targetWidth, targetHeight, r);
+    gif.addFrame(ctx, { copy: true, delay: 1000 / gifFps });
+  }
+
+  gif.on('finished', (blob) => {
+    const url = URL.createObjectURL(blob);
+    document.getElementById('resultGif2').src = url;
+    document.getElementById('gifResultSize').textContent = 'حجم ملف الـ GIF: ' + Math.round(blob.size/1024) + ' KB';
+    document.getElementById('downloadGifBtn').onclick = () => downloadBlob(blob, 'photo-to-video.gif');
+  });
+  gif.render();
+}
+</script>
+</body>
+</html>

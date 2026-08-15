@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إزالة خلفية الصور أونلاين مجاناً | Remove Background من الصور بدقة</title>
+<meta name="description" content="احذف خلفية أي صورة مجاناً وبدقة عالية باستخدام الذكاء الاصطناعي، بالكامل من متصفحك بدون رفع الصورة لأي سيرفر.">
+<meta name="keywords" content="ازالة خلفية الصورة, remove background online free, قص الصورة عن الخلفية, background remover, ازالة الخلفية بالذكاء الاصطناعي, تفريغ خلفية الصور, جعل خلفية الصورة شفافة, remove image background AI, قص الصورة اونلاين مجانا, transparent background maker, ازالة خلفية بيضاء من الصورة, cut out image background free, تفريغ صورة منتج للتصميم, AI background removal tool, ازالة الخلفية بدقة عالية, photo background eraser online, قص الصور بدون فوتوشوب, remove bg free no signup, تصميم صورة بخلفية شفافة, background removal for products, از الة خلفية صورة شخصية, free background eraser tool">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>✂️ إزالة <span>خلفية الصور</span></h1>
+  <p class="tool-desc">بتشتغل بمكتبة ذكاء اصطناعي خفيفة جوا متصفحك — أول مرة ممكن تاخد وقت لتحميل النموذج، وبعدين بتبقى أسرع.</p>
+  <div class="card">
+    <label>اختار صورة:</label>
+    <input type="file" id="bgInput" accept="image/*">
+    <button class="btn" id="removeBtn" disabled>🪄 إزالة الخلفية</button>
+    <p class="hint" id="bgStatus"></p>
+    <div class="grid-2" style="margin-top:20px;">
+      <div><p class="hint">قبل</p><canvas id="origCanvas"></canvas></div>
+      <div><p class="hint">بعد</p><canvas id="resultCanvas" style="background:repeating-conic-gradient(#333 0% 25%, #444 0% 50%) 50% / 20px 20px;"></canvas></div>
+    </div>
+    <button class="btn" id="dlBtn" style="display:none;">⬇ تحميل بدون خلفية (PNG شفاف)</button>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script src="assets/common.js"></script>
+<script type="module">
+import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser.mjs';
+
+let selectedFile = null;
+const bgInput = document.getElementById('bgInput');
+const removeBtn = document.getElementById('removeBtn');
+const status = document.getElementById('bgStatus');
+
+bgInput.onchange = (e) => {
+  selectedFile = e.target.files[0];
+  if(!selectedFile) return;
+  removeBtn.disabled = false;
+  const img = new Image();
+  img.onload = () => {
+    const c = document.getElementById('origCanvas');
+    c.width = img.width; c.height = img.height;
+    c.getContext('2d').drawImage(img, 0, 0);
+  };
+  img.src = URL.createObjectURL(selectedFile);
+};
+
+removeBtn.onclick = async () => {
+  if(!selectedFile) return;
+  status.textContent = 'جاري تحميل نموذج الذكاء الاصطناعي (أول مرة بس)، ممكن ياخد دقيقة حسب سرعة النت...';
+  removeBtn.disabled = true;
+  try {
+    const resultBlob = await removeBackground(selectedFile, {
+      publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/'
+    });
+    const img = new Image();
+    img.onload = () => {
+      const c = document.getElementById('resultCanvas');
+      c.width = img.width; c.height = img.height;
+      c.getContext('2d').drawImage(img, 0, 0);
+      status.textContent = 'تم بنجاح ✓';
+      const dlBtn = document.getElementById('dlBtn');
+      dlBtn.style.display = 'inline-block';
+      dlBtn.onclick = () => downloadBlob(resultBlob, 'no-background.png');
+    };
+    img.src = URL.createObjectURL(resultBlob);
+  } catch(err){
+    status.textContent = 'حصل خطأ: ' + (err && err.message ? err.message : 'تعذرت المعالجة') + ' — جرب صورة أصغر حجم أو أعد تحميل الصفحة.';
+    console.error(err);
+  }
+  removeBtn.disabled = false;
+};
+</script>
+</body>
+</html>
