@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EG.M.Belal | منصة تحميل البرامج</title>
   <meta name="description" content="المنصة الرسمية لتحميل برامج EG.M.Belal. برامج أصلية مع تحديثات مستمرة وميزات متقدمة، بالإضافة لأدوات أونلاين مجانية: ضغط الصور، تحويل العملات، QR كود، تحويل نص لصوت، اختبار سرعة النت، ألوان CSS، حاسبة BMI، مولد باسورد، عداد كلمات، استخراج نص من صورة OCR، إزالة خلفية الصور، دمج PDF، توقيع إلكتروني، ومقارنة نصوص.">
-  <meta name="keywords" content="تحميل برامج, EG.M.Belal, اي جي بلال, ضغط الصور, image compressor, تحويل العملات, currency converter, مولد QR, QR code generator, تحويل نص لصوت, text to speech, اختبار سرعة النت, speed test, منتقي الألوان, color picker gradient generator, حاسبة السعرات, BMI calculator, مولد باسورد, password generator, عداد كلمات, word counter, استخراج نص من صورة, OCR, إزالة خلفية الصورة, remove background, دمج PDF, merge PDF, توقيع الكتروني, signature generator, ضغط اكواد, code minifier, مقارنة نصوص, text diff, تحويل فيديو الى gif, video to gif converter, تحويل صور الى gif, images to gif maker, تحريك صورة واحدة, تحويل رابط فيديو الى gif, video url to gif, صانع gif مجاني, أدوات مجانية اونلاين, free online tools">
+  <meta name="keywords" content="تحميل برامج, EG.M.Belal, اي جي بلال, ضغط الصور, image compressor, تحويل العملات, currency converter, مولد QR, QR code generator, تحويل نص لصوت, text to speech, اختبار سرعة النت, speed test, منتقي الألوان, color picker gradient generator, حاسبة السعرات, BMI calculator, مولد باسورد, password generator, عداد كلمات, word counter, استخراج نص من صورة, OCR, إزالة خلفية الصورة, remove background, دمج PDF, merge PDF, توقيع الكتروني, signature generator, ضغط اكواد, code minifier, مقارنة نصوص, text diff, تحويل فيديو الى gif, video to gif converter, تحويل صور الى gif, images to gif maker, تحريك صورة واحدة, تحويل رابط فيديو الى gif, video url to gif, صانع gif مجاني, ترجمة نصوص, مترجم عربي انجليزي, online translator, أدوات مجانية اونلاين, free online tools">
   <link rel="canonical" href="https://egmbelal.com/">
 
   <style>
@@ -15,7 +15,8 @@
       --text:#f0f6fc; --text2:#8b949e;
       --gradient:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
     }
-    body { font-family:"Segoe UI",Arial; background:var(--bg); color:var(--text); margin:0; }
+    body { font-family:"Segoe UI",Arial; background:var(--bg); color:var(--text); margin:0; overflow-x:hidden; }
+    html { overflow-x:hidden; }
     header { display:flex; justify-content:space-between; align-items:center; padding:20px 8%; border-bottom:1px solid var(--border); background:rgba(13,17,23,0.85); backdrop-filter:blur(12px); position:sticky; top:0; z-index:100; }
     .logo { font-size:24px; font-weight:800; }
     .logo span { color:var(--accent); text-shadow:0 0 10px var(--accent); }
@@ -23,8 +24,9 @@
     nav a:hover, .admin-trigger:hover { color:var(--accent); }
     .container { max-width:1200px; margin:auto; padding:40px 20px; }
     .hero { text-align:center; padding:60px 0; }
+    .hero h1 { font-size:clamp(1.5rem, 5vw, 2.4rem); line-height:1.4; }
     .hero h1 span { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .btn-download { display:inline-block; background:var(--gradient); color:#000; font-weight:700; padding:15px 25px; border-radius:10px; text-decoration:none; margin-top:20px; transition:.3s; }
+    .btn-download { display:inline-block; background:var(--gradient); color:#000; font-weight:700; padding:15px 25px; border-radius:10px; text-decoration:none; margin-top:20px; transition:.3s; min-height:46px; }
     .btn-download:hover { transform:translateY(-3px); box-shadow:0 8px 35px var(--accent); }
     .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px; margin-top:40px; }
     .project-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:.3s; }
@@ -35,16 +37,16 @@
     .screenshot-box p { padding:10px; text-align:center; color:var(--text2); }
     footer { text-align:center; padding:40px; border-top:1px solid var(--border); color:var(--text2); background:#090d13; margin-top:80px; }
     .contact { margin-top:40px; text-align:center; }
-    .contact p { margin:5px 0; }
+    .contact p { margin:5px 0; word-break:break-word; }
     /* لوحة التحكم */
     .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:999; }
-    .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:600px; box-shadow:0 0 50px rgba(0,242,254,0.4); }
+    .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:600px; box-shadow:0 0 50px rgba(0,242,254,0.4); max-height:88vh; overflow-y:auto; }
     .admin-panel h2 { margin-top:0; color:var(--accent); text-align:center; }
     .admin-panel label { display:block; margin-top:10px; font-weight:600; color:var(--text2); }
-    .admin-panel input, .admin-panel textarea { width:100%; padding:10px; background:#0d1117; border:1px solid var(--border); border-radius:6px; color:#fff; margin-top:5px; }
-    .admin-btn { background:var(--gradient); color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; width:100%; margin-top:15px; cursor:pointer; }
-    .tab-buttons { display:flex; justify-content:space-around; margin-bottom:15px; }
-    .tab-buttons button { flex:1; margin:0 5px; }
+    .admin-panel input, .admin-panel textarea { width:100%; padding:10px; background:#0d1117; border:1px solid var(--border); border-radius:6px; color:#fff; margin-top:5px; box-sizing:border-box; }
+    .admin-btn { background:var(--gradient); color:#000; border:none; padding:12px; border-radius:6px; font-weight:bold; width:100%; margin-top:15px; cursor:pointer; min-height:44px; }
+    .tab-buttons { display:flex; justify-content:space-around; margin-bottom:15px; flex-wrap:wrap; }
+    .tab-buttons button { flex:1; margin:3px; min-width:90px; }
     .tab-content { display:none; }
     .tab-content.active { display:block; }
     /* صفحة التحميل الموحدة */
@@ -53,7 +55,7 @@
     /* قسم البحث */
     .search-section { padding:30px 0 10px; text-align:center; }
     .search-wrap { max-width:500px; margin:auto; position:relative; }
-    #toolSearchInput { width:100%; padding:14px 45px 14px 16px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:15px; }
+    #toolSearchInput { width:100%; padding:14px 45px 14px 16px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text); font-size:15px; box-sizing:border-box; }
     #toolSearchInput:focus { outline:none; border-color:var(--accent); }
     .search-wrap::before { content:"🔍"; position:absolute; right:16px; top:50%; transform:translateY(-50%); opacity:.6; }
     /* قسم الأدوات */
@@ -65,11 +67,36 @@
     .tool-card p { margin:0; color:var(--text2); font-size:13px; line-height:1.6; }
     .tool-card .try-btn { display:inline-block; margin-top:12px; color:var(--accent); font-weight:700; font-size:13px; }
     .tool-card.hidden-by-search { display:none; }
-    @media (max-width:600px){
-      .tools-grid { grid-template-columns:1fr 1fr; gap:12px; }
-      .tool-card { padding:15px; }
-      .tool-card h3 { font-size:14px; }
+
+    /* ===== تنسيق الموبايل: واضح، مرتب، مش مزحوم ===== */
+    @media (max-width:768px){
+      header { padding:14px 5%; gap:8px; }
+      .logo { font-size:19px; }
+      nav { display:flex; flex-wrap:wrap; gap:4px 14px; justify-content:flex-start; }
+      nav a, .admin-trigger { margin-right:0; font-size:13.5px; }
+      .container { padding:26px 16px; }
+      .hero { padding:36px 0 30px; }
+      .btn-download { width:100%; box-sizing:border-box; text-align:center; padding:15px; font-size:14.5px; }
+      .projects-grid { grid-template-columns:1fr; gap:16px; margin-top:26px; }
+      .project-card { padding:16px; }
+      .screenshot-grid { grid-template-columns:1fr 1fr; gap:10px; }
+      footer { padding:26px 16px; margin-top:50px; font-size:0.85rem; }
+      .admin-panel { padding:20px; width:92%; border-radius:14px; }
+      .tools-grid { grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+      .tool-card { padding:14px 12px; border-radius:12px; }
+      .tool-card .tool-icon { font-size:1.6rem; margin-bottom:6px; }
+      .tool-card h3 { font-size:13px; line-height:1.4; }
       .tool-card p { display:none; }
+      .tool-card .try-btn { font-size:11.5px; margin-top:8px; }
+      #toolSearchInput { padding:12px 42px 12px 14px; font-size:14px; }
+      .search-section h2 { font-size:1.3rem; }
+      form textarea { min-height:100px; box-sizing:border-box; }
+    }
+    @media (max-width:400px){
+      .tools-grid { grid-template-columns:1fr; }
+      .screenshot-grid { grid-template-columns:1fr; }
+      .hero h1 { font-size:1.4rem; }
+      .container { padding:20px 12px; }
     }
   </style>
 </head>
@@ -190,6 +217,9 @@
         </a>
         <a href="tools/image-to-video.html" class="tool-card" data-keywords="تحويل صورة الى فيديو photo to video image to video animate photo تحريك صورة فيديو">
           <div class="tool-icon">🎥</div><h3>صورة إلى فيديو متحرك</h3><p>حرّك صورتك بفيديو سينمائي قصير</p><span class="try-btn">جرب الآن ◀</span>
+        </a>
+        <a href="tools/translator.html" class="tool-card" data-keywords="ترجمة نصوص مترجم عربي انجليزي translate text online translator ترجمة فورية">
+          <div class="tool-icon">🌐</div><h3>ترجمة نصوص فورية</h3><p>ترجم بين أكتر من 12 لغة فوراً</p><span class="try-btn">جرب الآن ◀</span>
         </a>
       </div>
       <p id="noResultsMsg" style="display:none; text-align:center; color:var(--text2); margin-top:20px;">مفيش نتائج مطابقة، جرب كلمة تانية</p>
