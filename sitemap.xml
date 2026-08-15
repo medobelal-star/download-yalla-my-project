@@ -169,4 +169,12 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- 21. أداة ترجمة النصوص الفورية -->
+  <url>
+    <loc>https://egmbelal-medobelal-stars-projects.vercel.app/tools/translator.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
