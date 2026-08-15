@@ -38,7 +38,7 @@
     footer { text-align:center; padding:40px; border-top:1px solid var(--border); color:var(--text2); background:#090d13; margin-top:80px; }
     .contact { margin-top:40px; text-align:center; }
     .contact p { margin:5px 0; word-break:break-word; }
-    /* لوحة التحكم */
+    /* المطور */
     .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:999; }
     .admin-panel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); border:2px solid var(--accent); border-radius:16px; padding:30px; z-index:1000; width:90%; max-width:600px; box-shadow:0 0 50px rgba(0,242,254,0.4); max-height:88vh; overflow-y:auto; }
     .admin-panel h2 { margin-top:0; color:var(--accent); text-align:center; }
@@ -108,7 +108,7 @@
       <a href="#programs">البرامج</a>
       <a href="#tools">🧰 الأدوات</a>
       <a href="#contact">تواصل</a>
-      <span class="admin-trigger" onclick="openAdmin()">🔐 لوحة التحكم</span>
+      <span class="admin-trigger" onclick="openAdmin()">🔐 المطور</span>
     </nav>
   </header>
 
@@ -116,6 +116,8 @@
     <section class="hero">
       <h1 id="hero-title">تحميل برنامج <span>Download Yalla</span></h1>
       <p id="hero-desc">مدير تنزيلات متطور بخيوط معالجة متعددة وسرعة فائقة.</p>
+      <!-- صورة البرنامج الرئيسي (تظهر لو الأدمن رفعها من تبويب "صور البرامج") -->
+      <img id="heroImg" src="" alt="صورة البرنامج الرئيسي" style="display:none; width:220px; height:220px; object-fit:cover; border-radius:20px; border:1px solid var(--border); margin:20px auto 0; display:block;">
       <!-- زر إرسال رسالة للمطورين -->
       <a href="mailto:mohamedbelal.2604@gmail.com?subject=طلب%20تحميل%20برنامج%20Yalla&body=أريد%20تحميل%20البرنامج%20وإرسال%20الرابط%20المباشر" 
          class="btn-download">✉️ إرسال رسالة للمطورين</a>
@@ -132,8 +134,8 @@
           <p id="prog1-desc">أداة قوية لإدارة الملفات.</p>
           <a href="https://www.mediafire.com/file/example/x-tool.zip/file" class="btn-download">تحميل</a>
           <div class="screenshot-grid">
-            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
-            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img id="prog1-img1" src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img id="prog1-img2" src="https://via.placeholder.com/300x200"></div>
           </div>
         </div>
         <div class="project-card">
@@ -141,8 +143,8 @@
           <p id="prog2-desc">إصلاح وتشغيل الوسائط بجودة عالية.</p>
           <a href="https://www.mediafire.com/file/ywq33pofpdu5ghl/download-yalla-v3.zip/file" class="btn-download">📥 تحميل</a>
           <div class="screenshot-grid">
-            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
-            <div class="screenshot-box"><img src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img id="prog2-img1" src="https://via.placeholder.com/300x200"></div>
+            <div class="screenshot-box"><img id="prog2-img2" src="https://via.placeholder.com/300x200"></div>
           </div>
         </div>
       </div>
@@ -247,10 +249,10 @@
     </section>
   </div>
 
-  <!-- لوحة التحكم -->
+  <!-- المطور -->
   <div class="overlay" onclick="closeAdmin()"></div>
   <div class="admin-panel" id="adminPanel">
-    <h2>لوحة إدارة الموقع ⚡</h2>
+    <h2>المطور ⚡</h2>
     <div id="loginForm">
       <label>اسم المستخدم:</label>
       <input type="text" id="username">
@@ -263,6 +265,7 @@
       <div class="tab-buttons">
         <button onclick="openTab('generalTab')">⚙️ عام</button>
         <button onclick="openTab('programsTab')">📦 البرامج</button>
+        <button onclick="openTab('imagesTab')">🖼️ صور البرامج</button>
         <button onclick="openTab('messagesTab')">📩 الرسائل</button>
       </div>
 
@@ -291,11 +294,25 @@
         <textarea id="newProgDesc"></textarea>
         <label>رابط التحميل (MediaFire):</label>
         <input type="text" id="newProgLink">
-        <label>رابط صورة 1:</label>
-        <input type="text" id="newProgImg1">
-        <label>رابط صورة 2:</label>
-        <input type="text" id="newProgImg2">
+
+        <label>صورة 1:</label>
+        <input type="text" id="newProgImg1" placeholder="رابط صورة (أو ارفع من جهازك تحت)">
+        <input type="file" accept="image/*" style="margin-top:6px;" onchange="handleImgFile(this, 'new-1')">
+        <div style="text-align:center; margin-top:8px;"><img id="preview-new-1" style="display:none; width:90px; height:90px; object-fit:cover; border-radius:10px; border:1px solid var(--border);"></div>
+
+        <label>صورة 2:</label>
+        <input type="text" id="newProgImg2" placeholder="رابط صورة (أو ارفع من جهازك تحت)">
+        <input type="file" accept="image/*" style="margin-top:6px;" onchange="handleImgFile(this, 'new-2')">
+        <div style="text-align:center; margin-top:8px;"><img id="preview-new-2" style="display:none; width:90px; height:90px; object-fit:cover; border-radius:10px; border:1px solid var(--border);"></div>
+
         <button class="admin-btn" onclick="addProgram()">➕ إضافة البرنامج</button>
+      </div>
+
+      <!-- تبويب صور البرامج -->
+      <div id="imagesTab" class="tab-content">
+        <h3>🖼️ إدارة صور البرامج</h3>
+        <p class="hint">دوس "اختار صورة" لأي برنامج، وحدد الجزء اللي عايزه منها، هتتحط تلقائي بشكل مربع كامل مهما كان حجم أو شكل الصورة الأصلية.</p>
+        <div id="programImagesList"></div>
       </div>
 
       <!-- تبويب الرسائل -->
@@ -306,6 +323,22 @@
 
       <button class="admin-btn" onclick="saveChanges()">💾 حفظ</button>
       <button class="admin-btn" onclick="logout()">🚪 تسجيل خروج</button>
+    </div>
+  </div>
+
+  <!-- نافذة قص الصورة (مشتركة لكل صور البرامج) -->
+  <div class="overlay" id="cropperOverlay" style="display:none; z-index:1100;" onclick="cancelCrop()"></div>
+  <div class="admin-panel" id="cropperPanel" style="display:none; z-index:1101; max-width:380px;">
+    <h3 style="text-align:center; color:var(--accent); margin-top:0;">✂️ حدد جزء الصورة</h3>
+    <div style="width:100%; max-width:280px; aspect-ratio:1/1; margin:15px auto; border-radius:16px; overflow:hidden; border:2px solid var(--accent); background:#000;">
+      <canvas id="cropCanvas" width="500" height="500" style="width:100%; height:100%; display:block; touch-action:none; cursor:grab;"></canvas>
+    </div>
+    <label>تكبير:</label>
+    <input type="range" id="cropZoom" min="100" max="300" value="100">
+    <p class="hint" style="text-align:center;">اسحب الصورة بإصبعك أو الماوس لتحديد المكان اللي عايزه، وحرك شريط التكبير لو حبيت تقرب أكتر.</p>
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button class="admin-btn" style="background:#2a2a32; color:#fff;" onclick="cancelCrop()">إلغاء</button>
+      <button class="admin-btn" onclick="confirmCrop()">✅ تأكيد</button>
     </div>
   </div>
   <!-- صفحة التحميل الموحدة -->
@@ -345,6 +378,7 @@
     function openTab(tabId){
       document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
+      if(tabId === 'imagesTab') renderProgramImagesList();
     }
     function saveChanges(){
       localStorage.setItem('title',document.getElementById('editTitle').value);
@@ -361,8 +395,9 @@
       const title=document.getElementById('newProgTitle').value;
       const desc=document.getElementById('newProgDesc').value;
       const link=document.getElementById('newProgLink').value;
-      const img1=document.getElementById('newProgImg1').value;
-      const img2=document.getElementById('newProgImg2').value;
+      // لو الأدمن رفع وقصّ صورة من جهازه، هي الأولوية؛ وإلا نستخدم الرابط النصي لو موجود
+      const img1=pendingCrops['new-1'] || document.getElementById('newProgImg1').value;
+      const img2=pendingCrops['new-2'] || document.getElementById('newProgImg2').value;
 
       if(title && link){
         const grid=document.getElementById('programsGrid');
@@ -383,10 +418,202 @@
         let progs=JSON.parse(localStorage.getItem('programs')||'[]');
         progs.push({title,desc,link,img1,img2});
         localStorage.setItem('programs',JSON.stringify(progs));
+
+        // تنظيف حقول الصور المؤقتة بعد الإضافة
+        delete pendingCrops['new-1']; delete pendingCrops['new-2'];
+        document.getElementById('preview-new-1').style.display='none';
+        document.getElementById('preview-new-2').style.display='none';
+        document.getElementById('newProgImg1').value='';
+        document.getElementById('newProgImg2').value='';
+
         alert('تم إضافة البرنامج بنجاح');
       } else {
         alert('من فضلك أدخل اسم البرنامج ورابط التحميل');
       }
+    }
+
+    // ==================== نظام قص الصور (مشترك لكل صور البرامج) ====================
+    const pendingCrops = {}; // تخزين مؤقت للصور اللي لسه ماتأكدتش/اتحفظتش
+    let cropState = { img:null, zoom:100, offsetX:0, offsetY:0, target:null };
+    const CROP_CANVAS_SIZE = 500;
+
+    function handleImgFile(inputEl, target){
+      const file = inputEl.files[0];
+      if(!file) return;
+      const img = new Image();
+      img.onload = () => {
+        cropState.img = img;
+        cropState.zoom = 100;
+        cropState.target = target;
+        document.getElementById('cropZoom').value = 100;
+        layoutCrop(true);
+        document.getElementById('cropperOverlay').style.display='block';
+        document.getElementById('cropperPanel').style.display='block';
+      };
+      img.src = URL.createObjectURL(file);
+      inputEl.value = ''; // نسمح باختيار نفس الملف تاني لو حب يعدل
+    }
+
+    function layoutCrop(recenter){
+      const img = cropState.img;
+      if(!img) return;
+      const baseScale = Math.max(CROP_CANVAS_SIZE/img.width, CROP_CANVAS_SIZE/img.height);
+      const scale = baseScale * (cropState.zoom/100);
+      const drawnW = img.width*scale, drawnH = img.height*scale;
+      if(recenter){
+        cropState.offsetX = (CROP_CANVAS_SIZE - drawnW)/2;
+        cropState.offsetY = (CROP_CANVAS_SIZE - drawnH)/2;
+      } else {
+        cropState.offsetX = Math.min(0, Math.max(CROP_CANVAS_SIZE-drawnW, cropState.offsetX));
+        cropState.offsetY = Math.min(0, Math.max(CROP_CANVAS_SIZE-drawnH, cropState.offsetY));
+      }
+      drawCrop();
+    }
+
+    function drawCrop(){
+      const canvas = document.getElementById('cropCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = cropState.img;
+      ctx.clearRect(0,0,CROP_CANVAS_SIZE,CROP_CANVAS_SIZE);
+      if(!img) return;
+      const baseScale = Math.max(CROP_CANVAS_SIZE/img.width, CROP_CANVAS_SIZE/img.height);
+      const scale = baseScale * (cropState.zoom/100);
+      const drawnW = img.width*scale, drawnH = img.height*scale;
+      ctx.drawImage(img, cropState.offsetX, cropState.offsetY, drawnW, drawnH);
+    }
+
+    document.getElementById('cropZoom').addEventListener('input', (e) => {
+      cropState.zoom = parseInt(e.target.value);
+      layoutCrop(false);
+    });
+
+    // سحب الصورة بالماوس أو باللمس
+    (function(){
+      const canvas = document.getElementById('cropCanvas');
+      let dragging = false, startX=0, startY=0, startOffX=0, startOffY=0;
+
+      function pointerDown(clientX, clientY){
+        if(!cropState.img) return;
+        dragging = true;
+        startX = clientX; startY = clientY;
+        startOffX = cropState.offsetX; startOffY = cropState.offsetY;
+        canvas.style.cursor = 'grabbing';
+      }
+      function pointerMove(clientX, clientY){
+        if(!dragging) return;
+        const rect = canvas.getBoundingClientRect();
+        const ratio = CROP_CANVAS_SIZE / rect.width;
+        cropState.offsetX = startOffX + (clientX - startX) * ratio;
+        cropState.offsetY = startOffY + (clientY - startY) * ratio;
+        layoutCrop(false);
+      }
+      function pointerUp(){ dragging = false; canvas.style.cursor = 'grab'; }
+
+      canvas.addEventListener('mousedown', e => pointerDown(e.clientX, e.clientY));
+      window.addEventListener('mousemove', e => pointerMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', pointerUp);
+      canvas.addEventListener('touchstart', e => { const t=e.touches[0]; pointerDown(t.clientX, t.clientY); }, {passive:true});
+      canvas.addEventListener('touchmove', e => { const t=e.touches[0]; pointerMove(t.clientX, t.clientY); }, {passive:true});
+      canvas.addEventListener('touchend', pointerUp);
+    })();
+
+    function cancelCrop(){
+      document.getElementById('cropperOverlay').style.display='none';
+      document.getElementById('cropperPanel').style.display='none';
+      cropState.img = null; cropState.target = null;
+    }
+
+    function confirmCrop(){
+      const canvas = document.getElementById('cropCanvas');
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      const target = cropState.target;
+      pendingCrops[target] = dataUrl;
+
+      // تحديث أي معاينة موجودة على الصفحة لنفس الهدف (سواء في تبويب "برامج جديد" أو "صور البرامج")
+      const previewEl = document.getElementById('preview-' + target);
+      if(previewEl){ previewEl.src = dataUrl; previewEl.style.display = 'inline-block'; }
+      const thumbEl = document.getElementById('thumb-' + target);
+      if(thumbEl){ thumbEl.src = dataUrl; }
+
+      // لو الصورة دي لبرنامج موجود بالفعل (مش برنامج جديد لسه بيتضاف)، نحفظها فورًا
+      applyImageTarget(target, dataUrl);
+
+      cancelCrop();
+    }
+
+    // بيحدد إزاي نحفظ الصورة حسب نوع الهدف (البرنامج الرئيسي / برنامج ثابت / برنامج ديناميكي / برنامج جديد لسه)
+    function applyImageTarget(target, dataUrl){
+      if(target === 'hero'){
+        localStorage.setItem('heroImg', dataUrl);
+        const el = document.getElementById('heroImg');
+        el.src = dataUrl; el.style.display = 'block';
+      } else if(target === 'prog1-1' || target === 'prog1-2' || target === 'prog2-1' || target === 'prog2-2'){
+        const fixedKey = target.split('-')[0] + 'Img' + target.split('-')[1];
+        localStorage.setItem(fixedKey, dataUrl);
+        document.getElementById(target.split('-')[0] + '-img' + target.split('-')[1]).src = dataUrl;
+      } else if(target.startsWith('dyn-')){
+        // مثال: dyn-2-1 يعني البرنامج رقم 2 في المصفوفة، صورة 1
+        const parts = target.split('-'); // ['dyn', index, slot]
+        const idx = parseInt(parts[1]); const slot = parts[2];
+        let progs = JSON.parse(localStorage.getItem('programs')||'[]');
+        if(progs[idx]){
+          if(slot === '1') progs[idx].img1 = dataUrl; else progs[idx].img2 = dataUrl;
+          localStorage.setItem('programs', JSON.stringify(progs));
+          const imgEl = document.getElementById('dyn-img-' + idx + '-' + slot);
+          if(imgEl) imgEl.src = dataUrl;
+        }
+      }
+      // target = 'new-1' / 'new-2' بيتسابوا في pendingCrops لحد ما يضغط "إضافة البرنامج"
+    }
+
+    // بناء قائمة كل البرامج الحالية وصورها جوا تبويب "صور البرامج"
+    function renderProgramImagesList(){
+      const container = document.getElementById('programImagesList');
+      let html = '';
+
+      // البرنامج الرئيسي
+      const heroImgSrc = localStorage.getItem('heroImg') || '';
+      html += programImageRow('البرنامج الرئيسي (Download Yalla)', [
+        { target:'hero', src: heroImgSrc }
+      ]);
+
+      // X-Tool
+      html += programImageRow('برنامج X-Tool', [
+        { target:'prog1-1', src: localStorage.getItem('prog1Img1') || document.getElementById('prog1-img1').src },
+        { target:'prog1-2', src: localStorage.getItem('prog1Img2') || document.getElementById('prog1-img2').src }
+      ]);
+
+      // MediaFix
+      html += programImageRow('برنامج MediaFix', [
+        { target:'prog2-1', src: localStorage.getItem('prog2Img1') || document.getElementById('prog2-img1').src },
+        { target:'prog2-2', src: localStorage.getItem('prog2Img2') || document.getElementById('prog2-img2').src }
+      ]);
+
+      // البرامج المضافة ديناميكيًا
+      const progs = JSON.parse(localStorage.getItem('programs')||'[]');
+      progs.forEach((p, idx) => {
+        html += programImageRow(p.title || ('برنامج ' + (idx+1)), [
+          { target:'dyn-'+idx+'-1', src: p.img1 || '' },
+          { target:'dyn-'+idx+'-2', src: p.img2 || '' }
+        ]);
+      });
+
+      container.innerHTML = html;
+    }
+
+    function programImageRow(programName, slots){
+      let slotsHtml = slots.map((s, i) => `
+        <div style="text-align:center;">
+          <img src="${s.src || 'https://via.placeholder.com/90'}" style="width:80px; height:80px; object-fit:cover; border-radius:10px; border:1px solid var(--border); display:block; margin:auto;" id="thumb-${s.target}">
+          <input type="file" accept="image/*" style="width:80px; padding:4px; font-size:10px; margin-top:6px;" onchange="handleImgFile(this, '${s.target}')">
+        </div>
+      `).join('');
+      return `
+        <div style="border:1px solid var(--border); border-radius:12px; padding:14px; margin-top:12px; background:#0d1117;">
+          <p style="margin:0 0 10px; font-weight:700; color:var(--text);">${programName}</p>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">${slotsHtml}</div>
+        </div>
+      `;
     }
 
     function showMessages(){
@@ -430,11 +657,21 @@
       if(localStorage.getItem('phone')) document.querySelector('#contact a[href^="tel"]').innerText=localStorage.getItem('phone');
       if(localStorage.getItem('email')) document.querySelector('#contact a[href^="mailto"]').innerText=localStorage.getItem('email');
 
+      // استرجاع صور البرنامج الرئيسي و X-Tool و MediaFix لو الأدمن رفعهم قبل كده
+      if(localStorage.getItem('heroImg')){
+        const heroEl = document.getElementById('heroImg');
+        heroEl.src = localStorage.getItem('heroImg'); heroEl.style.display = 'block';
+      }
+      if(localStorage.getItem('prog1Img1')) document.getElementById('prog1-img1').src = localStorage.getItem('prog1Img1');
+      if(localStorage.getItem('prog1Img2')) document.getElementById('prog1-img2').src = localStorage.getItem('prog1Img2');
+      if(localStorage.getItem('prog2Img1')) document.getElementById('prog2-img1').src = localStorage.getItem('prog2Img1');
+      if(localStorage.getItem('prog2Img2')) document.getElementById('prog2-img2').src = localStorage.getItem('prog2Img2');
+
       // تحميل البرامج الجديدة من LocalStorage
       if(localStorage.getItem('programs')){
         const progs=JSON.parse(localStorage.getItem('programs'));
         const grid=document.getElementById('programsGrid');
-        progs.forEach(p=>{
+        progs.forEach((p, idx)=>{
           const card=document.createElement('div');
           card.className='project-card';
           card.innerHTML=`
@@ -442,8 +679,8 @@
             <p>${p.desc}</p>
             <a href="${p.link}" class="btn-download">تحميل</a>
             <div class="screenshot-grid">
-              <div class="screenshot-box"><img src="${p.img1||'https://via.placeholder.com/300x200'}"></div>
-              <div class="screenshot-box"><img src="${p.img2||'https://via.placeholder.com/300x200'}"></div>
+              <div class="screenshot-box"><img id="dyn-img-${idx}-1" src="${p.img1||'https://via.placeholder.com/300x200'}"></div>
+              <div class="screenshot-box"><img id="dyn-img-${idx}-2" src="${p.img2||'https://via.placeholder.com/300x200'}"></div>
             </div>
           `;
           grid.appendChild(card);
@@ -466,7 +703,7 @@
       </div>
       <div class="project-card">
         <h3>هل يمكنني إضافة برامج جديدة؟</h3>
-        <p>إذا كنت أدمن، يمكنك الدخول إلى لوحة التحكم واستخدام تبويب "📦 البرامج" لإضافة برامج جديدة مع روابط وصور.</p>
+        <p>إذا كنت أدمن، يمكنك الدخول إلى المطور واستخدام تبويب "📦 البرامج" لإضافة برامج جديدة، وتبويب "🖼️ صور البرامج" لرفع أو تعديل صور أي برنامج.</p>
       </div>
       <div class="project-card">
         <h3>كيف أتواصل مع المطور؟</h3>
