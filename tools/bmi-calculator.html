@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة السعرات الحرارية ومؤشر كتلة الجسم BMI مجاناً</title>
+<meta name="description" content="احسب مؤشر كتلة جسمك BMI ووزنك المثالي والسعرات الحرارية اللي محتاجها يومياً حسب عمرك، طولك، ومستوى نشاطك اليومي.">
+<meta name="keywords" content="حاسبة السعرات الحرارية, حاسبة bmi, مؤشر كتلة الجسم, حساب الوزن المثالي, bmi calculator online, calories calculator free, حساب السعرات اليومية, انقاص الوزن, حساب معدل الحرق, حاسبة الوزن المثالي للطول, daily calorie needs calculator, حساب bmr, نظام غذائي حساب سعرات, healthy weight calculator, حساب دهون الجسم تقريبي, weight loss calculator online, حساب معدل الايض, ideal weight for height, حاسبة اللياقة البدنية, fitness calorie tracker, حساب معدل حرق الدهون, body fat percentage estimator">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>⚖️ حاسبة <span>الكتلة والسعرات</span></h1>
+  <p class="tool-desc">اعرف وزنك المثالي والسعرات الحرارية اللي محتاجها يومياً.</p>
+  <div class="card">
+    <div class="grid-2">
+      <div><label>الوزن (كجم):</label><input type="number" id="weight" value="70"></div>
+      <div><label>الطول (سم):</label><input type="number" id="height" value="170"></div>
+    </div>
+    <div class="grid-2">
+      <div><label>العمر:</label><input type="number" id="age" value="25"></div>
+      <div><label>الجنس:</label>
+        <select id="gender"><option value="male">ذكر</option><option value="female">أنثى</option></select>
+      </div>
+    </div>
+    <label>مستوى النشاط:</label>
+    <select id="activity">
+      <option value="1.2">قليل الحركة (مكتبي)</option>
+      <option value="1.375">نشاط خفيف (1-3 أيام رياضة)</option>
+      <option value="1.55" selected>نشاط متوسط (3-5 أيام رياضة)</option>
+      <option value="1.725">نشاط عالي (6-7 أيام رياضة)</option>
+      <option value="1.9">رياضي محترف</option>
+    </select>
+    <button class="btn" onclick="calculate()">احسب الآن</button>
+    <div class="result-box" id="result" style="display:none;"></div>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script>
+function calculate(){
+  const weight = parseFloat(document.getElementById('weight').value);
+  const heightCm = parseFloat(document.getElementById('height').value);
+  const age = parseFloat(document.getElementById('age').value);
+  const gender = document.getElementById('gender').value;
+  const activity = parseFloat(document.getElementById('activity').value);
+  if(!weight || !heightCm || !age) return;
+
+  const heightM = heightCm / 100;
+  const bmi = weight / (heightM * heightM);
+  let bmiCategory = 'وزن طبيعي';
+  if(bmi < 18.5) bmiCategory = 'نحافة';
+  else if(bmi >= 25 && bmi < 30) bmiCategory = 'زيادة وزن';
+  else if(bmi >= 30) bmiCategory = 'سمنة';
+
+  let bmr;
+  if(gender === 'male'){
+    bmr = 10*weight + 6.25*heightCm - 5*age + 5;
+  } else {
+    bmr = 10*weight + 6.25*heightCm - 5*age - 161;
+  }
+  const calories = Math.round(bmr * activity);
+  const idealWeight = gender === 'male'
+    ? (heightCm - 100 - (heightCm-150)/4).toFixed(1)
+    : (heightCm - 100 - (heightCm-150)/2.5).toFixed(1);
+
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').innerHTML = `
+    <p>مؤشر كتلة الجسم (BMI): <strong style="color:var(--accent);">${bmi.toFixed(1)}</strong> (${bmiCategory})</p>
+    <p>السعرات الحرارية اليومية المقترحة: <strong style="color:var(--accent);">${calories}</strong> سعرة</p>
+    <p>الوزن المثالي التقريبي: <strong style="color:var(--accent);">${idealWeight}</strong> كجم</p>
+  `;
+}
+</script>
+</body>
+</html>

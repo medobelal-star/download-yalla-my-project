@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ترجمة نصوص فورية مجاناً | مترجم عربي انجليزي وأكثر من 12 لغة</title>
+<meta name="description" content="ترجم أي نص فوراً بين العربية والإنجليزية والفرنسية والألمانية والإيطالية والصينية والكورية وأكتر من 12 لغة، مجاناً وبدون تسجيل.">
+<meta name="keywords" content="ترجمة نصوص, مترجم عربي انجليزي, ترجمة فورية مجانية, online translator free, translate arabic to english, ترجمة مقالات, ترجمة انجليزي عربي, translate text online, ترجمة الماني عربي, ترجمة فرنسي عربي, ترجمة ايطالي عربي, ترجمة صيني عربي, ترجمة كوري عربي, arabic english translator online, ترجمة نص طويل مجانا, free text translator no signup, ترجمة جمل كاملة, multi language translator online, ترجمة تركي عربي, ترجمة اسباني عربي, ترجمة روسي عربي, ترجمة ياباني عربي, best online translator 2026, ترجمة نصوص فورية بدون برنامج, translate paragraph online free, ترجمة برتغالي عربي">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .lang-row { display:flex; align-items:center; gap:10px; }
+  .lang-row select { flex:1; }
+  .swap-btn { background:#1c1c22; border:1px solid var(--border); border-radius:50%; width:44px; height:44px; min-width:44px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; color:var(--text); transition:.2s; }
+  .swap-btn:hover { background:var(--accent); color:#000; transform:rotate(180deg); }
+  .translate-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+  .translate-box textarea { min-height:180px; }
+  .char-count { text-align:left; font-size:12px; color:var(--text2); margin-top:4px; }
+  .detected-badge { display:inline-block; background:rgba(0,242,254,0.12); color:var(--accent); border-radius:20px; padding:3px 12px; font-size:12px; margin-right:8px; }
+  @media (max-width:700px){
+    .translate-grid { grid-template-columns:1fr; }
+    .swap-btn { margin:auto; transform:rotate(90deg); }
+    .swap-btn:hover { transform:rotate(270deg); }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>🌐 ترجمة <span>نصوص فورية</span></h1>
+  <p class="tool-desc">ترجم بين أكتر من 12 لغة فوراً — عربي، إنجليزي، فرنسي، ألماني، إيطالي، صيني، كوري، وأكتر.</p>
+
+  <div class="card">
+    <div class="lang-row">
+      <select id="sourceLang">
+        <option value="auto">🌐 اكتشاف تلقائي للغة</option>
+        <option value="ar">العربية</option>
+        <option value="en" selected>الإنجليزية</option>
+        <option value="fr">الفرنسية</option>
+        <option value="de">الألمانية</option>
+        <option value="it">الإيطالية</option>
+        <option value="es">الإسبانية</option>
+        <option value="tr">التركية</option>
+        <option value="ru">الروسية</option>
+        <option value="zh-CN">الصينية</option>
+        <option value="ja">اليابانية</option>
+        <option value="ko">الكورية</option>
+        <option value="pt">البرتغالية</option>
+      </select>
+      <div class="swap-btn" id="swapBtn" title="بدّل اللغتين">⇄</div>
+      <select id="targetLang">
+        <option value="ar" selected>العربية</option>
+        <option value="en">الإنجليزية</option>
+        <option value="fr">الفرنسية</option>
+        <option value="de">الألمانية</option>
+        <option value="it">الإيطالية</option>
+        <option value="es">الإسبانية</option>
+        <option value="tr">التركية</option>
+        <option value="ru">الروسية</option>
+        <option value="zh-CN">الصينية</option>
+        <option value="ja">اليابانية</option>
+        <option value="ko">الكورية</option>
+        <option value="pt">البرتغالية</option>
+      </select>
+    </div>
+
+    <div class="translate-grid">
+      <div class="translate-box">
+        <label>النص الأصلي:</label>
+        <textarea id="sourceText" placeholder="اكتب أو الصق النص هنا..."></textarea>
+        <div class="char-count" id="sourceCount">0 حرف</div>
+      </div>
+      <div class="translate-box">
+        <label>الترجمة: <span class="detected-badge" id="detectedBadge" style="display:none;"></span></label>
+        <textarea id="targetText" placeholder="الترجمة هتظهر هنا..." readonly></textarea>
+        <div class="char-count" id="targetCount">0 حرف</div>
+      </div>
+    </div>
+
+    <button class="btn" id="translateBtn" style="width:100%;">🌐 ترجم الآن</button>
+    <button class="btn btn-secondary" id="copyBtn" style="width:100%;">📋 نسخ الترجمة</button>
+    <p class="hint" id="statusMsg"></p>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script src="assets/common.js"></script>
+<script>
+const sourceText = document.getElementById('sourceText');
+const targetText = document.getElementById('targetText');
+const sourceLang = document.getElementById('sourceLang');
+const targetLang = document.getElementById('targetLang');
+
+sourceText.oninput = () => document.getElementById('sourceCount').textContent = sourceText.value.length + ' حرف';
+
+document.getElementById('swapBtn').onclick = () => {
+  if(sourceLang.value === 'auto'){
+    document.getElementById('statusMsg').textContent = 'مينفعش تبديل اللغة لما اللغة الأصلية "اكتشاف تلقائي" — اختار لغة محددة الأول.';
+    return;
+  }
+  const tmpLang = sourceLang.value;
+  sourceLang.value = targetLang.value;
+  targetLang.value = tmpLang;
+  const tmpText = sourceText.value;
+  sourceText.value = targetText.value;
+  targetText.value = tmpText;
+  document.getElementById('sourceCount').textContent = sourceText.value.length + ' حرف';
+};
+
+document.getElementById('translateBtn').onclick = async () => {
+  const text = sourceText.value.trim();
+  const status = document.getElementById('statusMsg');
+  if(!text){ status.textContent = 'اكتب نص الأول عشان تترجمه'; return; }
+
+  status.textContent = 'جاري الترجمة...';
+  targetText.value = '';
+  document.getElementById('detectedBadge').style.display = 'none';
+
+  try {
+    const sl = sourceLang.value;
+    const tl = targetLang.value;
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('فشل الاتصال');
+    const data = await res.json();
+
+    let translated = '';
+    data[0].forEach(chunk => { if(chunk[0]) translated += chunk[0]; });
+    targetText.value = translated;
+    document.getElementById('targetCount').textContent = translated.length + ' حرف';
+
+    if(sl === 'auto' && data[2]){
+      const badge = document.getElementById('detectedBadge');
+      badge.style.display = 'inline-block';
+      badge.textContent = 'اللغة المكتشفة: ' + data[2];
+    }
+    status.textContent = 'تمت الترجمة ✓';
+  } catch(err){
+    status.textContent = '❌ حصل خطأ في الاتصال بخدمة الترجمة، جرب تاني بعد شوية.';
+  }
+};
+
+document.getElementById('copyBtn').onclick = () => {
+  copyToClipboard(targetText.value, document.getElementById('copyBtn'));
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مولد وقارئ كود QR مجاني | إنشاء رمز الاستجابة السريعة</title>
+<meta name="description" content="أداة إنشاء وقراءة أكواد QR أونلاين. حوّل الروابط والنصوص إلى كود QR قابل للمسح بالموبايل فوراً، أو اقرأ أي كود QR من صورة عندك.">
+<meta name="keywords" content="صانع QR, مولد كود QR, قراءة QR code, صانع باركود مجاني, QR Generator online, QR code reader free, انشاء كيو ار كود, قارئ باركود اونلاين, عمل كود qr لرابط, تحويل رابط الى باركود, free QR code maker, scan QR code online, تحميل كود qr بجودة عالية, qr code for wifi, عمل باركود لمنيو مطعم, generate qr code from text, قراءة باركود من صورة, custom qr code generator, qr code scanner online free, انشاء رمز الاستجابة السريعة, qr code business card, تحويل بيانات الاتصال الى qr">
+<link rel="stylesheet" href="assets/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>📱 مولّد <span>وقارئ QR</span></h1>
+  <p class="tool-desc">حوّل أي رابط أو نص لكود QR، أو اقرأ كود QR من صورة عندك.</p>
+
+  <div class="card">
+    <h3>➕ إنشاء كود QR</h3>
+    <label>اكتب رابط أو نص:</label>
+    <input type="text" id="qrText" placeholder="https://example.com">
+    <button class="btn" onclick="generateQR()">إنشاء QR</button>
+    <div id="qrOutput" style="text-align:center; margin-top:20px;"></div>
+    <button class="btn btn-secondary" id="downloadQrBtn" style="display:none;">⬇ تحميل الكود</button>
+  </div>
+
+  <div class="card">
+    <h3>🔍 قراءة كود QR من صورة</h3>
+    <input type="file" id="qrImageInput" accept="image/*">
+    <div class="result-box" id="qrReadResult" style="display:none;"></div>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script src="assets/common.js"></script>
+<script>
+function generateQR(){
+  const text = document.getElementById('qrText').value.trim();
+  const output = document.getElementById('qrOutput');
+  output.innerHTML = '';
+  if(!text) return;
+  new QRCode(output, { text: text, width:220, height:220, colorDark:"#000000", colorLight:"#ffffff" });
+  setTimeout(() => {
+    document.getElementById('downloadQrBtn').style.display = 'inline-block';
+    document.getElementById('downloadQrBtn').onclick = () => {
+      const img = output.querySelector('img') || output.querySelector('canvas');
+      if(img.tagName === 'CANVAS'){
+        img.toBlob(blob => downloadBlob(blob, 'qr-code.png'));
+      } else {
+        fetch(img.src).then(r=>r.blob()).then(blob => downloadBlob(blob, 'qr-code.png'));
+      }
+    };
+  }, 200);
+}
+
+document.getElementById('qrImageInput').onchange = (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width; canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
+      const resultBox = document.getElementById('qrReadResult');
+      resultBox.style.display = 'block';
+      resultBox.textContent = code ? ('النص المكتشف: ' + code.data) : 'معرفتش ألاقي كود QR في الصورة دي';
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+</script>
+</body>
+</html>

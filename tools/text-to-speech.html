@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحويل النص إلى صوت والصوت إلى نص مجاناً | Text to Speech Online</title>
+<meta name="description" content="حوّل أي نص مكتوب إلى صوت مسموع بالعربي أو الإنجليزي، أو حوّل كلامك المسجل إلى نص مكتوب فوراً، كل ده من متصفحك مباشرة.">
+<meta name="keywords" content="تحويل النص لصوت, نص الى صوت, صوت الى نص, text to speech online free, speech to text arabic, قراءة النصوص صوتيا, تفريغ صوتي, تحويل كلام لكتابة, نطق النص بالعربي, قارئ نصوص صوتي مجاني, voice generator online, arabic text to speech, تحويل الكتابة الى كلام, dictation online free, تفريغ الصوت الى نص عربي, read text aloud online, تسجيل صوتي وتحويله لنص, natural voice reader, تحويل مقال الى صوت, online voice reader arabic, text reader online, تحويل النص لملف صوتي mp3">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header>
+  <a href="../index.html" class="logo">EG.M.<span>Belal</span></a>
+  <a href="../index.html#tools" class="back-link">◀ كل الأدوات</a>
+</header>
+<div class="container">
+  <h1>🔊 نص <span>↔ صوت</span></h1>
+  <p class="tool-desc">تحويل ثنائي الاتجاه، شغال بتقنية المتصفح مباشرة (مفيش رفع ملفات).</p>
+
+  <div class="card">
+    <h3>📝 من نص إلى صوت</h3>
+    <textarea id="ttsText" placeholder="اكتب النص هنا..."></textarea>
+    <label>اللغة:</label>
+    <select id="ttsLang">
+      <option value="ar-SA">العربية</option>
+      <option value="en-US">English</option>
+    </select>
+    <button class="btn" onclick="speakText()">▶ تشغيل الصوت</button>
+    <button class="btn btn-secondary" onclick="stopSpeak()">⏹ إيقاف</button>
+  </div>
+
+  <div class="card">
+    <h3>🎙️ من صوت إلى نص</h3>
+    <p class="hint">اضغط "ابدأ التسجيل" وتكلم، والنص هيظهر تلقائي (متاح في متصفح كروم بشكل أساسي).</p>
+    <button class="btn" id="startRecBtn" onclick="startRecognition()">🎤 ابدأ التسجيل</button>
+    <div class="result-box" id="sttResult" style="display:none;"></div>
+  </div>
+</div>
+<footer>© 2026 EG.M.Belal</footer>
+<script>
+function speakText(){
+  const text = document.getElementById('ttsText').value.trim();
+  if(!text) return;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = document.getElementById('ttsLang').value;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utterance);
+}
+function stopSpeak(){ speechSynthesis.cancel(); }
+
+function startRecognition(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    alert('المتصفح ده مش بيدعم تحويل الصوت لنص، جرب جوجل كروم.');
+    return;
+  }
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'ar-SA';
+  recognition.interimResults = false;
+  const resultBox = document.getElementById('sttResult');
+  resultBox.style.display = 'block';
+  resultBox.textContent = 'بيسمعك دلوقتي... اتكلم';
+  recognition.onresult = (event) => {
+    resultBox.textContent = event.results[0][0].transcript;
+  };
+  recognition.onerror = () => { resultBox.textContent = 'حصل خطأ، حاول تاني.'; };
+  recognition.start();
+}
+</script>
+</body>
+</html>
