@@ -6,7 +6,7 @@
   <title>EG.M.Belal | منصة تحميل البرامج</title>
   <meta name="description" content="المنصة الرسمية لتحميل برامج EG.M.Belal. برامج أصلية مع تحديثات مستمرة وميزات متقدمة، بالإضافة لأدوات أونلاين مجانية: ضغط الصور، تحويل العملات، QR كود، تحويل نص لصوت، اختبار سرعة النت، ألوان CSS، حاسبة BMI، مولد باسورد، عداد كلمات، استخراج نص من صورة OCR، إزالة خلفية الصور، دمج PDF، توقيع إلكتروني، ومقارنة نصوص.">
   <meta name="keywords" content="تحميل برامج, EG.M.Belal, اي جي بلال, ضغط الصور, image compressor, تحويل العملات, currency converter, مولد QR, QR code generator, تحويل نص لصوت, text to speech, اختبار سرعة النت, speed test, منتقي الألوان, color picker gradient generator, حاسبة السعرات, BMI calculator, مولد باسورد, password generator, عداد كلمات, word counter, استخراج نص من صورة, OCR, إزالة خلفية الصورة, remove background, دمج PDF, merge PDF, توقيع الكتروني, signature generator, ضغط اكواد, code minifier, مقارنة نصوص, text diff, تحويل فيديو الى gif, video to gif converter, تحويل صور الى gif, images to gif maker, تحريك صورة واحدة, تحويل رابط فيديو الى gif, video url to gif, صانع gif مجاني, ترجمة نصوص, مترجم عربي انجليزي, online translator, أدوات مجانية اونلاين, free online tools">
-  <link rel="canonical" href="https://egmbelal-medobelal-stars-projects.vercel.app/">
+  <link rel="canonical" href="https://egmbelal.com/">
 
   <style>
     :root {
@@ -97,6 +97,52 @@
       .screenshot-grid { grid-template-columns:1fr; }
       .hero h1 { font-size:1.4rem; }
       .container { padding:20px 12px; }
+    }
+
+    /* ===== مساعد الأدوات الذكي (شات بوت محلي) ===== 
+    
+    .chatbot-fab {
+      position: fixed; bottom: 24px; left: 24px; z-index: 500;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--gradient); border: none; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,242,254,0.35); font-size: 26px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .2s;
+    }
+    .chatbot-fab:hover { transform: scale(1.08); }
+    .chatbot-panel {
+      position: fixed; bottom: 92px; left: 24px; z-index: 500;
+      width: 340px; max-width: calc(100vw - 32px); height: 460px; max-height: 70vh;
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden;
+    }
+    .chatbot-panel.open { display: flex; }
+    .chatbot-head {
+      background: var(--gradient); color: #000; padding: 14px 16px; font-weight: 800;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .chatbot-head span.sub { display:block; font-size: 11px; font-weight: 600; opacity: .75; }
+    .chatbot-close { background: none; border: none; color: #000; font-size: 20px; cursor: pointer; }
+    .chatbot-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .chatbot-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.6; }
+    .chatbot-msg.bot { background: #1c1c22; align-self: flex-start; border-bottom-right-radius: 4px; }
+    .chatbot-msg.user { background: var(--accent); color: #000; align-self: flex-end; border-bottom-left-radius: 4px; font-weight: 600; }
+    .chatbot-msg .open-tool-btn {
+      display: inline-block; margin-top: 8px; background: var(--gradient); color: #000;
+      padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 12.5px;
+    }
+    .chatbot-input-row { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+    .chatbot-input-row input {
+      flex: 1; background: #0d1117; border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; color: #fff; font-size: 13.5px; box-sizing: border-box;
+    }
+    .chatbot-input-row input:focus { outline: none; border-color: var(--accent); }
+    .chatbot-input-row button {
+      background: var(--gradient); border: none; border-radius: 10px; width: 42px; cursor: pointer; font-size: 16px;
+    }
+    @media (max-width: 480px) {
+      .chatbot-fab { bottom: 16px; left: 16px; width: 52px; height: 52px; font-size: 22px; }
+      .chatbot-panel { bottom: 80px; left: 12px; width: calc(100vw - 24px); }
     }
   </style>
 </head>
@@ -796,6 +842,98 @@
         document.getElementById('noResultsMsg').style.display = visibleCount === 0 ? 'block' : 'none';
       });
     }
+
+    // ==================== مساعد الأدوات الذكي (مطابقة محلية سريعة، بدون أي اتصال خارجي) ====================
+    (function(){
+      const fab = document.getElementById('chatbotFab');
+      const panel = document.getElementById('chatbotPanel');
+      const closeBtn = document.getElementById('chatbotClose');
+      const messagesEl = document.getElementById('chatbotMessages');
+      const input = document.getElementById('chatbotInput');
+      const sendBtn = document.getElementById('chatbotSend');
+      let greeted = false;
+
+      function addMsg(text, who, html){
+        const div = document.createElement('div');
+        div.className = 'chatbot-msg ' + who;
+        if(html) div.innerHTML = text; else div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function openPanel(){
+        panel.classList.add('open');
+        if(!greeted){
+          addMsg('أهلاً بيك! 👋 قولي محتاج تعمل إيه (مثلاً "عايز أضغط صورة" أو "محتاج أترجم نص") وأنا هفتحلك الأداة المناسبة فورًا.', 'bot');
+          greeted = true;
+        }
+        input.focus();
+      }
+      fab.onclick = () => panel.classList.contains('open') ? panel.classList.remove('open') : openPanel();
+      closeBtn.onclick = () => panel.classList.remove('open');
+
+      function getToolsData(){
+        return Array.from(document.querySelectorAll('#toolsGrid .tool-card')).map(card => ({
+          name: card.querySelector('h3').textContent.trim(),
+          desc: card.querySelector('p').textContent.trim(),
+          keywords: (card.getAttribute('data-keywords') || '').toLowerCase(),
+          href: card.getAttribute('href')
+        }));
+      }
+
+      function findBestMatch(query){
+        const q = query.toLowerCase().trim();
+        if(!q) return null;
+        const tokens = q.split(/\s+/).filter(t => t.length >= 2);
+        const tools = getToolsData();
+        let best = null, bestScore = 0;
+        tools.forEach(tool => {
+          let score = 0;
+          const haystack = tool.name.toLowerCase() + ' ' + tool.desc.toLowerCase() + ' ' + tool.keywords;
+          if(haystack.includes(q) && q.length >= 3) score += 5;
+          tokens.forEach(tok => { if(haystack.includes(tok)) score += 1; });
+          if(score > bestScore){ bestScore = score; best = tool; }
+        });
+        return bestScore >= 1 ? best : null;
+      }
+
+      function handleSend(){
+        const text = input.value.trim();
+        if(!text) return;
+        addMsg(text, 'user');
+        input.value = '';
+        setTimeout(() => {
+          const match = findBestMatch(text);
+          if(match){
+            addMsg(
+              `لقيت أداة "<strong>${match.name}</strong>" — ${match.desc}<br><a href="${match.href}" class="open-tool-btn">فتح الأداة الآن ◀</a>`,
+              'bot', true
+            );
+          } else {
+            addMsg('معرفتش ألاقي أداة مناسبة لكلامك بالظبط 🤔 جرب توصف اللي محتاجه بكلمة تانية، أو استخدم خانة البحث فوق قسم الأدوات.', 'bot');
+          }
+        }, 300);
+      }
+      sendBtn.onclick = handleSend;
+      input.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+    })();
   </script>
+
+  <!-- ===== مساعد الأدوات الذكي ===== -->
+  <button class="chatbot-fab" id="chatbotFab" title="مساعد الأدوات">💬</button>
+  <div class="chatbot-panel" id="chatbotPanel">
+    <div class="chatbot-head">
+      <div>🤖 مساعد الأدوات
+        <span class="sub">قولي محتاج إيه وهفتحلك الأداة فورًا</span>
+      </div>
+      <button class="chatbot-close" id="chatbotClose">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <div class="chatbot-input-row">
+      <input type="text" id="chatbotInput" placeholder="مثلاً: عايز أضغط صورة...">
+      <button id="chatbotSend">➤</button>
+    </div>
+  </div>
+
 </body>
 </html>
