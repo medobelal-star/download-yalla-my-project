@@ -99,50 +99,84 @@
       .container { padding:20px 12px; }
     }
 
-    /* ===== مساعد الأدوات الذكي (شات بوت محلي) ===== 
-    
+    /* ===== مساعد الأدوات الذكي ===== */
     .chatbot-fab {
-      position: fixed; bottom: 24px; left: 24px; z-index: 500;
+      position: fixed; bottom: 22px; left: 22px; z-index: 999;
       width: 58px; height: 58px; border-radius: 50%;
       background: var(--gradient); border: none; cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,242,254,0.35); font-size: 26px;
+      box-shadow: 0 6px 22px rgba(0,242,254,0.4); font-size: 26px;
       display: flex; align-items: center; justify-content: center;
       transition: transform .2s;
     }
     .chatbot-fab:hover { transform: scale(1.08); }
+    .chatbot-fab.hidden-fab { display: none; }
+
+    .chatbot-teaser {
+      position: fixed; bottom: 90px; left: 22px; z-index: 998;
+      background: #1c1c22; border: 1px solid var(--border); border-radius: 14px;
+      padding: 10px 16px; font-size: 12.5px; color: var(--text); max-width: 230px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.4); cursor: pointer;
+      opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s;
+      pointer-events: none; min-height: 18px;
+    }
+    .chatbot-teaser.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .chatbot-teaser .cursor { display:inline-block; width:2px; background:var(--accent); margin-right:2px; animation: blinkCursor .8s infinite; }
+    @keyframes blinkCursor { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
     .chatbot-panel {
-      position: fixed; bottom: 92px; left: 24px; z-index: 500;
-      width: 340px; max-width: calc(100vw - 32px); height: 460px; max-height: 70vh;
+      position: fixed; bottom: 90px; left: 22px; z-index: 1000;
+      width: 350px; max-width: calc(100vw - 28px); height: 480px; max-height: 72vh;
       background: var(--card); border: 1px solid var(--border); border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+      display: none; flex-direction: column; overflow: hidden;
     }
     .chatbot-panel.open { display: flex; }
     .chatbot-head {
-      background: var(--gradient); color: #000; padding: 14px 16px; font-weight: 800;
-      display: flex; justify-content: space-between; align-items: center;
+      background: var(--gradient); color: #0d1117; padding: 14px 16px; font-weight: 800;
+      display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0;
     }
-    .chatbot-head span.sub { display:block; font-size: 11px; font-weight: 600; opacity: .75; }
-    .chatbot-close { background: none; border: none; color: #000; font-size: 20px; cursor: pointer; }
-    .chatbot-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .chatbot-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.6; }
+    .chatbot-head .title { font-size: 14.5px; }
+    .chatbot-head .sub { display:block; font-size: 11px; font-weight: 600; opacity: .8; margin-top:2px; }
+    .chatbot-close { background: rgba(0,0,0,0.12); border: none; color: #0d1117; font-size: 15px; cursor: pointer; width:26px; height:26px; border-radius:50%; flex-shrink:0; }
+
+    .chatbot-messages { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background:#0a0a0c; }
+    .chatbot-msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.7; word-wrap: break-word; }
     .chatbot-msg.bot { background: #1c1c22; align-self: flex-start; border-bottom-right-radius: 4px; }
-    .chatbot-msg.user { background: var(--accent); color: #000; align-self: flex-end; border-bottom-left-radius: 4px; font-weight: 600; }
-    .chatbot-msg .open-tool-btn {
-      display: inline-block; margin-top: 8px; background: var(--gradient); color: #000;
-      padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 12.5px;
+    .chatbot-msg.user { background: var(--gradient); color: #0d1117; align-self: flex-end; border-bottom-left-radius: 4px; font-weight: 700; }
+
+    .chatbot-typing { align-self: flex-start; display:flex; gap:4px; padding:12px 16px; background:#1c1c22; border-radius:14px; border-bottom-right-radius:4px; }
+    .chatbot-typing span { width:6px; height:6px; border-radius:50%; background:#999; animation: typingBlink 1.2s infinite; }
+    .chatbot-typing span:nth-child(2){ animation-delay:.2s; }
+    .chatbot-typing span:nth-child(3){ animation-delay:.4s; }
+    @keyframes typingBlink { 0%,80%,100%{opacity:.25;} 40%{opacity:1;} }
+
+    .chatbot-options { display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; align-self: flex-start; max-width: 88%; }
+    .chatbot-options button {
+      background:#15151c; border:1px solid var(--accent); color:var(--accent); border-radius:20px;
+      padding:7px 14px; font-size:12px; cursor:pointer; font-weight:700; transition:.15s;
     }
-    .chatbot-input-row { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+    .chatbot-options button:hover { background:var(--accent); color:#0d1117; }
+
+    .chatbot-input-row { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); flex-shrink: 0; background: var(--card); }
     .chatbot-input-row input {
-      flex: 1; background: #0d1117; border: 1px solid var(--border); border-radius: 10px;
-      padding: 10px 12px; color: #fff; font-size: 13.5px; box-sizing: border-box;
+      flex: 1; background: #0d1117; border: 1px solid var(--border); border-radius: 22px;
+      padding: 11px 16px; color: #fff; font-size: 13.5px; box-sizing: border-box; min-width: 0;
     }
     .chatbot-input-row input:focus { outline: none; border-color: var(--accent); }
     .chatbot-input-row button {
-      background: var(--gradient); border: none; border-radius: 10px; width: 42px; cursor: pointer; font-size: 16px;
+      background: var(--gradient); border: none; border-radius: 50%; width: 42px; height: 42px;
+      cursor: pointer; font-size: 17px; flex-shrink: 0; display:flex; align-items:center; justify-content:center; color:#0d1117;
     }
+
     @media (max-width: 480px) {
-      .chatbot-fab { bottom: 16px; left: 16px; width: 52px; height: 52px; font-size: 22px; }
-      .chatbot-panel { bottom: 80px; left: 12px; width: calc(100vw - 24px); }
+      .chatbot-fab { bottom: 14px; left: 14px; width: 50px; height: 50px; font-size: 21px; }
+      .chatbot-teaser { display: none; }
+      .chatbot-panel {
+        bottom: 0; left: 0; right: 0; top: auto; width: 100%; max-width: 100%;
+        height: 78vh; max-height: 78vh; border-radius: 18px 18px 0 0;
+      }
+      .chatbot-head .title { font-size: 13.5px; }
+      .chatbot-msg { font-size: 12.5px; }
     }
   </style>
 </head>
@@ -842,98 +876,264 @@
         document.getElementById('noResultsMsg').style.display = visibleCount === 0 ? 'block' : 'none';
       });
     }
-
-    // ==================== مساعد الأدوات الذكي (مطابقة محلية سريعة، بدون أي اتصال خارجي) ====================
-    (function(){
-      const fab = document.getElementById('chatbotFab');
-      const panel = document.getElementById('chatbotPanel');
-      const closeBtn = document.getElementById('chatbotClose');
-      const messagesEl = document.getElementById('chatbotMessages');
-      const input = document.getElementById('chatbotInput');
-      const sendBtn = document.getElementById('chatbotSend');
-      let greeted = false;
-
-      function addMsg(text, who, html){
-        const div = document.createElement('div');
-        div.className = 'chatbot-msg ' + who;
-        if(html) div.innerHTML = text; else div.textContent = text;
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
-
-      function openPanel(){
-        panel.classList.add('open');
-        if(!greeted){
-          addMsg('أهلاً بيك! 👋 قولي محتاج تعمل إيه (مثلاً "عايز أضغط صورة" أو "محتاج أترجم نص") وأنا هفتحلك الأداة المناسبة فورًا.', 'bot');
-          greeted = true;
-        }
-        input.focus();
-      }
-      fab.onclick = () => panel.classList.contains('open') ? panel.classList.remove('open') : openPanel();
-      closeBtn.onclick = () => panel.classList.remove('open');
-
-      function getToolsData(){
-        return Array.from(document.querySelectorAll('#toolsGrid .tool-card')).map(card => ({
-          name: card.querySelector('h3').textContent.trim(),
-          desc: card.querySelector('p').textContent.trim(),
-          keywords: (card.getAttribute('data-keywords') || '').toLowerCase(),
-          href: card.getAttribute('href')
-        }));
-      }
-
-      function findBestMatch(query){
-        const q = query.toLowerCase().trim();
-        if(!q) return null;
-        const tokens = q.split(/\s+/).filter(t => t.length >= 2);
-        const tools = getToolsData();
-        let best = null, bestScore = 0;
-        tools.forEach(tool => {
-          let score = 0;
-          const haystack = tool.name.toLowerCase() + ' ' + tool.desc.toLowerCase() + ' ' + tool.keywords;
-          if(haystack.includes(q) && q.length >= 3) score += 5;
-          tokens.forEach(tok => { if(haystack.includes(tok)) score += 1; });
-          if(score > bestScore){ bestScore = score; best = tool; }
-        });
-        return bestScore >= 1 ? best : null;
-      }
-
-      function handleSend(){
-        const text = input.value.trim();
-        if(!text) return;
-        addMsg(text, 'user');
-        input.value = '';
-        setTimeout(() => {
-          const match = findBestMatch(text);
-          if(match){
-            addMsg(
-              `لقيت أداة "<strong>${match.name}</strong>" — ${match.desc}<br><a href="${match.href}" class="open-tool-btn">فتح الأداة الآن ◀</a>`,
-              'bot', true
-            );
-          } else {
-            addMsg('معرفتش ألاقي أداة مناسبة لكلامك بالظبط 🤔 جرب توصف اللي محتاجه بكلمة تانية، أو استخدم خانة البحث فوق قسم الأدوات.', 'bot');
-          }
-        }, 300);
-      }
-      sendBtn.onclick = handleSend;
-      input.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
-    })();
   </script>
 
   <!-- ===== مساعد الأدوات الذكي ===== -->
+  <div class="chatbot-teaser" id="chatbotTeaser"></div>
   <button class="chatbot-fab" id="chatbotFab" title="مساعد الأدوات">💬</button>
   <div class="chatbot-panel" id="chatbotPanel">
     <div class="chatbot-head">
-      <div>🤖 مساعد الأدوات
-        <span class="sub">قولي محتاج إيه وهفتحلك الأداة فورًا</span>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div id="botAvatar" style="width:36px; height:36px; border-radius:50%; background:#0d1117; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:15px; flex-shrink:0; overflow:hidden;">ر</div>
+        <div>
+          <div class="title">رانيا 🤖</div>
+          <span class="sub">قولي محتاج إيه وهفتحلك الأداة فورًا</span>
+        </div>
       </div>
       <button class="chatbot-close" id="chatbotClose">✕</button>
     </div>
     <div class="chatbot-messages" id="chatbotMessages"></div>
     <div class="chatbot-input-row">
-      <input type="text" id="chatbotInput" placeholder="مثلاً: عايز أضغط صورة...">
-      <button id="chatbotSend">➤</button>
+      <input type="text" id="chatbotInput" placeholder="اكتب اللي محتاجه...">
+      <button id="chatbotSend" title="إرسال">➤</button>
     </div>
   </div>
 
+  <script>
+  (function(){
+    // ==================== إعدادات رانيا (البوت) ====================
+    // لو حابب تحط صورة أفتار حقيقية بدل الحرف، غيّر السطرين دول لمسار صورتك:
+    // AVATAR_DEFAULT: الشكل العادي وهي بتستنى/بتفكر
+    // AVATAR_DONE: الشكل بعد ما تخلص طلبك بنجاح
+    const AVATAR_DEFAULT = null; // مثال: "assets/rania-1.png"
+    const AVATAR_DONE = null;    // مثال: "assets/rania-2.png"
+
+    // ⚠️ مفتاح Gemini API (اختياري) — لو عايز رانيا تفهم كلام مش موجود في قايمة الأدوات،
+    // حط مفتاحك هنا. تحذير أمان: الموقع ده Static ومرفوع على GitHub بشكل عام،
+    // يعني أي حد يقدر يشوف المفتاح ده من "View Source" ويستخدمه. متحطش مفتاح حساس هنا
+    // إلا لو مستعد للمخاطرة دي، أو استخدم Vercel Serverless Function لإخفائه بدل كده.
+    const GEMINI_API_KEY = ""; // <-- حط مفتاحك هنا لو حابب
+
+    const teaser = document.getElementById('chatbotTeaser');
+    const fab = document.getElementById('chatbotFab');
+    const panel = document.getElementById('chatbotPanel');
+    const closeBtn = document.getElementById('chatbotClose');
+    const messagesEl = document.getElementById('chatbotMessages');
+    const input = document.getElementById('chatbotInput');
+    const sendBtn = document.getElementById('chatbotSend');
+    const avatarEl = document.getElementById('botAvatar');
+
+    function setAvatar(state){
+      const src = state === 'done' ? AVATAR_DONE : AVATAR_DEFAULT;
+      if(src){ avatarEl.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;">`; }
+      else { avatarEl.innerHTML = state === 'done' ? '✓' : 'ر'; }
+    }
+    setAvatar('default');
+
+    // ---------- فقاعة التشويق (typewriter) قبل فتح الشات ----------
+    const teaserPhrases = [
+      'جرب: سعر الدولار النهاردة 💵',
+      'جرب: حوّل فيديو لـ GIF 🎬',
+      'جرب: ترجملي جملة 🌐',
+      'جرب: اضغط صورة 🖼️',
+      'جرب: مولد كلمة سر 🔐'
+    ];
+    let teaserRunning = true;
+    async function typeText(el, text){
+      el.innerHTML = '';
+      const span = document.createElement('span');
+      el.appendChild(span);
+      for(let i = 0; i <= text.length; i++){
+        if(!teaserRunning) return;
+        span.textContent = text.slice(0, i);
+        await new Promise(r => setTimeout(r, 35));
+      }
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      el.appendChild(cursor);
+      await new Promise(r => setTimeout(r, 1800));
+    }
+    async function eraseText(el, text){
+      const span = el.querySelector('span:not(.cursor)');
+      for(let i = text.length; i >= 0; i--){
+        if(!teaserRunning) return;
+        if(span) span.textContent = text.slice(0, i);
+        await new Promise(r => setTimeout(r, 18));
+      }
+      await new Promise(r => setTimeout(r, 400));
+    }
+    async function runTeaserLoop(){
+      teaser.classList.add('show');
+      let idx = 0;
+      while(teaserRunning){
+        const phrase = teaserPhrases[idx % teaserPhrases.length];
+        await typeText(teaser, phrase);
+        if(!teaserRunning) break;
+        await eraseText(teaser, phrase);
+        idx++;
+      }
+    }
+    setTimeout(runTeaserLoop, 1500);
+    teaser.onclick = () => openPanel();
+
+    // ---------- فتح/قفل النافذة ----------
+    let greeted = false;
+    function stopTeaser(){ teaserRunning = false; teaser.classList.remove('show'); }
+
+    function openPanel(){
+      stopTeaser();
+      panel.classList.add('open');
+      if(!greeted){
+        addMsg('أنا هنا، صديقك الروبوت رانيا 👋 قولي أساعدك إزاي؟ اكتب اللي محتاجه وأنا هفتحلك الأداة على طول.', 'bot');
+        greeted = true;
+      }
+      input.focus();
+    }
+    fab.onclick = () => panel.classList.contains('open') ? panel.classList.remove('open') : openPanel();
+    closeBtn.onclick = () => panel.classList.remove('open');
+
+    // ---------- عرض الرسائل (ستايل واتساب) ----------
+    function addMsg(text, who, html){
+      const div = document.createElement('div');
+      div.className = 'chatbot-msg ' + who;
+      if(html) div.innerHTML = text; else div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+    function showTyping(){
+      const div = document.createElement('div');
+      div.className = 'chatbot-typing';
+      div.id = 'typingIndicator';
+      div.innerHTML = '<span></span><span></span><span></span>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+    function hideTyping(){
+      const t = document.getElementById('typingIndicator');
+      if(t) t.remove();
+    }
+
+    // ---------- جمع بيانات الأدوات ----------
+    function getToolsData(){
+      return Array.from(document.querySelectorAll('#toolsGrid .tool-card')).map(card => ({
+        name: card.querySelector('h3').textContent.trim(),
+        desc: card.querySelector('p').textContent.trim(),
+        keywords: (card.getAttribute('data-keywords') || '').toLowerCase(),
+        href: card.getAttribute('href')
+      }));
+    }
+
+    function findMatches(query){
+      const q = query.toLowerCase().trim();
+      if(!q) return [];
+      const tokens = q.split(/\s+/).filter(t => t.length >= 2);
+      const tools = getToolsData();
+      const scored = tools.map(tool => {
+        let score = 0;
+        const haystack = tool.name.toLowerCase() + ' ' + tool.desc.toLowerCase() + ' ' + tool.keywords;
+        if(haystack.includes(q) && q.length >= 3) score += 5;
+        tokens.forEach(tok => { if(haystack.includes(tok)) score += 1; });
+        return { tool, score };
+      }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
+
+      if(scored.length === 0) return [];
+      const topScore = scored[0].score;
+      // نرجّع الأدوات القريبة من أعلى نتيجة (تعادل تقريبي) عشان لو فيه أكتر من أداة تناسب الطلب
+      return scored.filter(x => x.score >= topScore * 0.6).slice(0, 4).map(x => x.tool);
+    }
+
+    function showOptions(tools, introText){
+      addMsg(introText, 'bot');
+      const wrap = document.createElement('div');
+      wrap.className = 'chatbot-options';
+      tools.forEach(tool => {
+        const btn = document.createElement('button');
+        btn.textContent = tool.name;
+        btn.onclick = () => {
+          wrap.remove();
+          addMsg('تمام، هفتحلك "' + tool.name + '" في تاب جديد ✅', 'bot');
+          window.open(tool.href, '_blank');
+          setAvatar('done');
+          const remaining = tools.filter(t => t !== tool);
+          if(remaining.length){
+            setTimeout(() => {
+              addMsg('تم يا فندم ✅ لو حابب من الأدوات التانية القريبة من طلبك:', 'bot');
+              showOptionsFlat(remaining);
+            }, 500);
+          } else {
+            setTimeout(() => addMsg('تم يا فندم ✅ أي طلبات تانية؟', 'bot'), 500);
+          }
+        };
+        wrap.appendChild(btn);
+      });
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+    function showOptionsFlat(tools){
+      const wrap = document.createElement('div');
+      wrap.className = 'chatbot-options';
+      tools.forEach(tool => {
+        const btn = document.createElement('button');
+        btn.textContent = tool.name;
+        btn.onclick = () => { wrap.remove(); window.open(tool.href, '_blank'); addMsg('تمام، اتفتحت ✅', 'bot'); };
+        wrap.appendChild(btn);
+      });
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    // ---------- الرد من Gemini لو مفيش تطابق ولو مفتاح متضاف ----------
+    async function askGemini(userText){
+      if(!GEMINI_API_KEY) {
+        addMsg('معرفتش ألاقي أداة مناسبة لطلبك 🤔 جرب توصفه بكلمة تانية، أو استخدم خانة البحث فوق قسم الأدوات.', 'bot');
+        return;
+      }
+      showTyping();
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `انت اسمك رانيا، مساعدة موقع أدوات أونلاين مجانية اسمه EG.M.Belal. رد بإيجاز وبالعربي المصري على السؤال ده: ${userText}` }] }]
+          })
+        });
+        const data = await res.json();
+        hideTyping();
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'معرفتش أرد على ده دلوقتي، جرب تسأل بطريقة تانية.';
+        addMsg(reply, 'bot');
+      } catch(err){
+        hideTyping();
+        addMsg('حصل خطأ في الاتصال، جرب تاني كمان شوية.', 'bot');
+      }
+    }
+
+    // ---------- إرسال الرسالة ----------
+    function handleSend(){
+      const text = input.value.trim();
+      if(!text) return;
+      addMsg(text, 'user');
+      input.value = '';
+      showTyping();
+
+      setTimeout(() => {
+        hideTyping();
+        const matches = findMatches(text);
+        if(matches.length === 1){
+          const tool = matches[0];
+          addMsg(`لقيتلك "<strong>${tool.name}</strong>" — بفتحهالك دلوقتي ✅`, 'bot', true);
+          setAvatar('done');
+          setTimeout(() => { window.location.href = tool.href; }, 700);
+        } else if(matches.length > 1){
+          showOptions(matches, 'لقيت أكتر من أداة ممكن تنفعك، اختار أنهي واحدة عايز الأول:');
+        } else {
+          askGemini(text);
+        }
+      }, 500);
+    }
+    sendBtn.onclick = handleSend;
+    input.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+  })();
+  </script>
 </body>
 </html>
